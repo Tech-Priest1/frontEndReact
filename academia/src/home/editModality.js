@@ -31,30 +31,33 @@ const EditModality = () => {
   }
 
   return (
-    <div className="mainContainer">
-      <div className="titleContainer">
-        <div>Editar Tipos de Inscrição</div>
-      </div>
-      <div className="inputContainer">
-        <ul>
-          {gymTypes.map((gymType, index) => (
-            <li key={index}>
-              {gymType}
-              <button  className="inputButton" type="button" onClick={() => handleDeleteGymType(index)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-        <input
-          type="text"
-          placeholder="Novo Tipo de Inscrição"
-          value={newGymType}
-          onChange={(e) => setNewGymType(e.target.value)}
-          className="inputBox"
-        />
-        <button type="submit" className='inputButton'onClick={handleAddGymType}  >Adicionar</button>
-        <button type="submit" className='inputButton' onClick={handleCancel}  >Cancelar</button>
+    <div className="modalityContainer">
+    <div>
+      <h3 className="modalityTitulo">Editar Tipos de Inscrição</h3>
+    </div>
+    <ul className="modalityList">
+      {gymTypes.map((gymType, index) => (
+        <li key={index}>
+          {gymType}
+          <button type="submitModality" className='inputButton' onClick={() => handleDeleteGymType(index)}>Delete</button>
+        </li>
+      ))}
+    </ul>
+  
+    <div className="fixedBottom">
+      <input
+        type="text"
+        placeholder="Nova Modalidade"
+        value={newGymType}
+        onChange={(e) => setNewGymType(e.target.value)}
+        className="inputBox"
+      />
+      <div className="separadorModality">
+        <button type="submit" className='inputButton' onClick={handleAddGymType}>Adicionar</button>
+        <button type="submit" className='inputButton' onClick={handleCancel}>Cancelar</button>
       </div>
     </div>
+  </div>
   )
 }
 

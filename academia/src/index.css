@@ -60,7 +60,7 @@ button[type='submit'] {
   font-size: 20px;
   border-radius: 5px;
   cursor: pointer;
-  display: flex;
+  display:flex;
 }
 button[type='submitHome'] {
   border: none;
@@ -94,6 +94,17 @@ button[type='submitRegister'] {
   border-radius: 5px;
   cursor: pointer;
   display: flex;
+}
+button[type='submitModality'] {
+  border: none;
+  background: cornflowerblue;
+  color: white;
+  padding: 12px 24px;
+  margin: 8px 8px 8px 0px;
+  font-size: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display:flex;
 }
 
 button:hover {
