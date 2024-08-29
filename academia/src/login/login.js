@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+
+
+
 const Login = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -12,7 +15,7 @@ const Login = (props) => {
   const onButtonClick = () => {
     setEmailError('')
     setPasswordError('')
-
+    // eslint-disable-next-line 
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
     
     if (email === '') {
