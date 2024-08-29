@@ -1,26 +1,31 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterMember = () => {
-  const [name, setName] = useState('')
-  const [gymType, setgymType] = useState('')
-  const [price, setPrice] = useState('')
+  const [name, setName] = useState('');
+  const [gymType, setGymType] = useState('');
+  const [price, setPrice] = useState('');
+  const [gymTypes, setGymTypes] = useState([]);
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  useEffect(() => {
+    const storedGymTypes = JSON.parse(localStorage.getItem('gymTypes')) || [];
+    setGymTypes(storedGymTypes);
+  }, []);
 
   const onCancelClick = () => {
-    navigate('/')
-  }
+    navigate('/');
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const members = JSON.parse(localStorage.getItem('members')) || []
+    const members = JSON.parse(localStorage.getItem('members')) || [];
 
-    const existingMember = members.find(members => members.name === name)
+    const existingMember = members.find(member => member.name === name);
     if (existingMember) {
-      alert('Membro já existe!')
-      return
+      alert('Membro já existe!');
+      return;
     }
 
     const lastMember = members[members.length - 1];
@@ -28,8 +33,8 @@ const RegisterMember = () => {
     members.push({ id, name, gymType, price });
     localStorage.setItem('members', JSON.stringify(members));
 
-    navigate('/')
-  }
+    navigate('/');
+  };
 
   return (
     <div className="mainContainer">
@@ -42,19 +47,24 @@ const RegisterMember = () => {
         </div>
         <br />
         <div>
-          <input type="gymType" placeholder="Tipo da Inscrição" value={gymType} onChange={(e) => setgymType(e.target.value)} className='inputBox' required />
+          <select value={gymType} onChange={(e) => setGymType(e.target.value)} className='inputBox' required>
+            <option value="" disabled>Selecione a modalidade</option>
+            {gymTypes.map((type, index) => (
+              <option key={index} value={type}>{type}</option>
+            ))}
+          </select>
         </div>
         <br />
         <div>
           <input type="text" placeholder="Valor" value={price} onChange={(e) => setPrice(e.target.value)} className='inputBox' required />
         </div>
         <div className="separador">
-        <button type="submit" className='inputButton'>Registrar</button>
-        <button type="submit" className='inputButton' onClick={onCancelClick}>Cancelar</button>
+          <button type="submit" className='inputButton'>Registrar</button>
+          <button type="button" className='inputButton' onClick={onCancelClick}>Cancelar</button>
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default RegisterMember
+export default RegisterMember;

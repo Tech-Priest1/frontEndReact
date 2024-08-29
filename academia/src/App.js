@@ -5,11 +5,21 @@ import Register from './login/register'
 import RegisterMember from './member/registerMember'
 import EditMember from './member/editMember'
 import './App.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState('')
+
+  useEffect(() => {
+    const initialGymTypes = ['Musculação', 'Jiu-jitsu', 'Judô'];
+    const storedGymTypes = JSON.parse(localStorage.getItem('gymTypes'));
+
+    if (!storedGymTypes || storedGymTypes.length === 0) {
+      localStorage.setItem('gymTypes', JSON.stringify(initialGymTypes));
+    }
+  }, []);
 
   return (
     <div className="App">
