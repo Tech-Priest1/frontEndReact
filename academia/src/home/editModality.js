@@ -40,7 +40,7 @@ const EditModality = () => {
           {gymTypes.map((gymType, index) => (
             <li key={index}>
               {gymType}
-              <button  type="button" onClick={() => handleDeleteGymType(index)}>Delete</button>
+              <button  className="inputButton" type="button" onClick={() => handleDeleteGymType(index)}>Delete</button>
             </li>
           ))}
         </ul>
@@ -51,8 +51,8 @@ const EditModality = () => {
           onChange={(e) => setNewGymType(e.target.value)}
           className="inputBox"
         />
-        <button type="button" className="inputButton" onClick={handleAddGymType}  >Adicionar</button>
-        <button type="button" className="inputButton" onClick={handleCancel}  >Cancelar</button>
+        <button className="inputButton" type="button"onClick={handleAddGymType}  >Adicionar</button>
+        <button className="inputButton" type="button" onClick={handleCancel}  >Cancelar</button>
       </div>
     </div>
   )
