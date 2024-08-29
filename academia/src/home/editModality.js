@@ -51,8 +51,8 @@ const EditModality = () => {
           onChange={(e) => setNewGymType(e.target.value)}
           className="inputBox"
         />
-        <button className="inputButton" type="button"onClick={handleAddGymType}  >Adicionar</button>
-        <button className="inputButton" type="button" onClick={handleCancel}  >Cancelar</button>
+        <button type="submit" className='inputButton'onClick={handleAddGymType}  >Adicionar</button>
+        <button type="submit" className='inputButton' onClick={handleCancel}  >Cancelar</button>
       </div>
     </div>
   )
