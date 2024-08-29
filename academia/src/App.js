@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './login/login'
 import Home from './home/home'
+import EditModality from './home/editModality'
 import Register from './login/register'
 import RegisterMember from './member/registerMember'
 import EditMember from './member/editMember'
@@ -44,6 +45,10 @@ function App() {
          <Route 
             path="/editMember/:id"  
             element={<EditMember />} 
+          />
+           <Route 
+            path="/editModality/"  
+            element={<EditModality />} 
           />
         </Routes>
       </BrowserRouter>

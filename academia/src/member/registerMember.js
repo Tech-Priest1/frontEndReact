@@ -60,7 +60,7 @@ const RegisterMember = () => {
         </div>
         <div className="separador">
           <button type="submit" className='inputButton'>Registrar</button>
-          <button type="button" className='inputButton' onClick={onCancelClick}>Cancelar</button>
+          <button type="submit" className='inputButton' onClick={onCancelClick}>Cancelar</button>
         </div>
       </form>
     </div>

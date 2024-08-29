@@ -30,6 +30,10 @@ const Home = (props) => {
     navigate(`/editMember/${id}`)
   }
 
+  const editGymTypes = () => {
+    navigate('/editModality')
+  };
+
   return (
     <div className="mainContainer">
       <div className="titleContainer">
@@ -44,6 +48,9 @@ const Home = (props) => {
           <div className="buttonContainer">
             <input className="inputButton" type="button" onClick={handleRegister} value="Registre um novo membro" />
             <input className="inputButton" type="button" onClick={handleLogout} value="Log out" />
+          </div>
+          <div className="buttonContainer">
+          <input className="inputButton" type="button" onClick={editGymTypes} value="Editar Modalidades" />
           </div>
           <h3 class ="membrosTitulo">Membros da Academia</h3>
           <div className="membrosContainer">
