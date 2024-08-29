@@ -2,8 +2,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './login/Login'
 import Register from './login/Register'
 import Home from './home/Home'
-import './App.css'
+import RegisterMember from './login/RegisterMember'
 import { useState } from 'react'
+import './App.css'
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -15,7 +17,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+            element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />}
           />
           <Route
             path="/login"
@@ -24,6 +26,18 @@ function App() {
           <Route
             path="/register"
             element={<Register />}
+          />
+          <Route 
+            path="/home" 
+            element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} 
+          />
+          <Route 
+            path="/registerMember" 
+            element={<RegisterMember />} 
+          />
+          <Route 
+            path="*" 
+            element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} 
           />
         </Routes>
       </BrowserRouter>

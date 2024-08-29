@@ -35,6 +35,23 @@ const Login = (props) => {
       return
     }
 
+    const users = JSON.parse(localStorage.getItem('users')) || []
+
+ 
+  const user = users.find(user => user.email === email && user.password === password)
+
+  if (user) {
+   
+    console.log('Login successful!')
+    
+    props.setLoggedIn(true)
+    props.setEmail(user.email)
+    
+    navigate('/')
+  } else {
+   
+    setPasswordError('Email ou senha inválidos')
+  }
  
   }
   const onRegisterClick = () => {
@@ -45,9 +62,8 @@ const Login = (props) => {
   return (
     <div className='mainContainer'>
       <div className='titleContainer'>
-        <div>Login</div>
+        <div>Academia Frango forte</div>
       </div>
-      <br />
       <div className='inputContainer'>
         <input
           value={email}
@@ -70,18 +86,18 @@ const Login = (props) => {
       </div>
       <br />
       <div className='inputContainer'>
-        <input
+        <button
           className='inputButton'
-          type="button"
-          onClick={onButtonClick}
-          value='Log in'
-        />
-          <input
+          type="leftsubmit"
+          onClick={onButtonClick}>
+          Log in
+          </button>
+          <button
           className='inputButton'
-          type="button"
-          onClick={onRegisterClick}
-          value='Register'
-        />
+          type="rightsubmit"
+          onClick={onRegisterClick}>
+          Criar conta
+          </button>
       </div>
     </div>
   )

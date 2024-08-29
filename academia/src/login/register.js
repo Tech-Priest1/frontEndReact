@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-
 const Register = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -18,9 +17,7 @@ const Register = () => {
     setError('')
     setSuccess('')
 
-    
     const users = JSON.parse(localStorage.getItem('users')) || []
-
 
     const existingUser = users.find(user => user.email === email)
     if (existingUser) {
@@ -28,17 +25,19 @@ const Register = () => {
       return
     }
 
- 
     const id = users.length + 1
     users.push({ id, name, email, password, cpf })
     localStorage.setItem('users', JSON.stringify(users))
 
     setSuccess('Usuário registrado com sucesso!')
 
-    
     setTimeout(() => {
       navigate('/login')
     }, 2000)
+  }
+
+  const onLoginClick = () => {
+    navigate('/login')
   }
 
   return (
@@ -91,13 +90,16 @@ const Register = () => {
             required
           />
         </div>
-        <br />
+        <br/>
         <div className='inputContainer'>
-          <button type="submit" className='inputButton'>Registrar</button>
+          <button type="leftsubmit" className='inputButton'>Registrar</button>
         </div>
       </form>
       {error && <p className='errorLabel'>{error}</p>}
       {success && <p className='successLabel'>{success}</p>}
+      <div className='inputContainer'>
+        <button type="rightsubmit" onClick={onLoginClick} className='inputButton'>Ir para Login</button>
+      </div>
     </div>
   )
 }
