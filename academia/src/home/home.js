@@ -60,20 +60,21 @@ const Home = (props) => {
           <div className="buttonContainer">
           <input className="inputButton" type="button" onClick={editGymTypes} value="Editar Modalidades" />
           </div>
-          <h3 class ="membrosTitulo">Membros da Academia</h3>
+          
           <div className="membrosContainer">
-            <ul>
-              {members.map((member) => (
-                <li key={member.id} className="memberItem">
-                  {member.name} - {member.id}
-                  <div className="separador">
-                    <button type="submitHome" onClick={() => handleEdit(member.id)}>Edit</button>
-                    <button type="submitHome" onClick={() => handleDelete(member.id)}>Delete</button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+  <h3 className="membrosTitulo">Membros da Academia</h3>
+  <ul className="membrosList">
+    {members.map((member) => (
+      <li key={member.id} className="memberItem">
+        {member.name} - Id: {member.id}
+        <div className="separador">
+          <button type="submitHome" onClick={() => handleEdit(member.id)}>Edit</button>
+          <button type="submitHome" onClick={() => handleDelete(member.id)}>Delete</button>
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>
         </div>
       )}
     </div>
