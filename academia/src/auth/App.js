@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Login from './login/login'
-import Home from './home/home'
-import Register from './login/register'
+import Login from './login/Login'
+import Register from './login/Register'
+import Home from './home/Home'
 import './App.css'
 import { useState } from 'react'
 
@@ -21,10 +21,10 @@ function App() {
             path="/login"
             element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />}
           />
-         <Route
-         path="/register"
-         element={<Register />} 
-         />
+          <Route
+            path="/register"
+            element={<Register />}
+          />
         </Routes>
       </BrowserRouter>
     </div>

@@ -10,62 +10,78 @@ const Login = (props) => {
   const navigate = useNavigate()
 
   const onButtonClick = () => {
-    
     setEmailError('')
     setPasswordError('')
-  
-   
-    if ('' === email) {
+
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    
+    if (email === '') {
       setEmailError('Digite um email')
       return
     }
-  
-    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      setEmailError('Digite um email valido')
+
+    if (!emailRegex.test(email)) {
+      setEmailError('Digite um email válido')
       return
     }
-  
-    if ('' === password) {
+
+    if (password === '') {
       setPasswordError('Digite uma senha')
       return
     }
-  
+
     if (password.length < 5) {
       setPasswordError('A senha precisa ter 5 ou mais caracteres')
       return
     }
-  
-    // Authentication calls will be made here...
+
+ 
+  }
+  const onRegisterClick = () => {
+    navigate('/register')
   }
 
+
   return (
-    <div className={'mainContainer'}>
-      <div className={'titleContainer'}>
+    <div className='mainContainer'>
+      <div className='titleContainer'>
         <div>Login</div>
       </div>
       <br />
-      <div className={'inputContainer'}>
+      <div className='inputContainer'>
         <input
           value={email}
           placeholder="Digite seu email aqui"
           onChange={(ev) => setEmail(ev.target.value)}
-          className={'inputBox'}
+          className='inputBox'
         />
         <label className="errorLabel">{emailError}</label>
       </div>
       <br />
-      <div className={'inputContainer'}>
+      <div className='inputContainer'>
         <input
+          type="password"
           value={password}
           placeholder="Digite sua senha aqui"
           onChange={(ev) => setPassword(ev.target.value)}
-          className={'inputBox'}
+          className='inputBox'
         />
         <label className="errorLabel">{passwordError}</label>
       </div>
       <br />
-      <div className={'inputContainer'}>
-        <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} />
+      <div className='inputContainer'>
+        <input
+          className='inputButton'
+          type="button"
+          onClick={onButtonClick}
+          value='Log in'
+        />
+          <input
+          className='inputButton'
+          type="button"
+          onClick={onRegisterClick}
+          value='Register'
+        />
       </div>
     </div>
   )

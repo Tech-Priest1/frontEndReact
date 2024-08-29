@@ -51,3 +51,14 @@ input[type='button'] {
   border-radius: 8px;
   cursor: pointer;
 }
+button[type='submit'] {
+  border: none;
+  background: cornflowerblue;
+  color: white;
+  padding: 12px 24px;
+  margin: 8px;
+  margin-left: 120px;
+  font-size: 24px;
+  border-radius: 8px;
+  cursor: pointer;
+}
