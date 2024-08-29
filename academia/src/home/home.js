@@ -68,8 +68,8 @@ const Home = (props) => {
       <li key={member.id} className="memberItem">
         {member.name} - Id: {member.id}
         <div className="separador">
-          <button type="submit" className='inputButton' onClick={() => handleEdit(member.id)}>Edit</button>
-          <button type="submit" className='inputButton' onClick={() => handleDelete(member.id)}>Delete</button>
+          <button type="submitHome" onClick={() => handleEdit(member.id)}>Edit</button>
+          <button type="submitHome" onClick={() => handleDelete(member.id)}>Delete</button>
         </div>
       </li>
     ))}
