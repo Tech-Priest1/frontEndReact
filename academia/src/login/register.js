@@ -91,15 +91,16 @@ const Register = () => {
           />
         </div>
         <br/>
-        <div className='inputContainer'>
-          <button type="leftsubmit" className='inputButton'>Registrar</button>
-        </div>
-      </form>
+       <div className='separador'>
+        <button type="submitRegister" className='inputButton'>Registrar</button>
+        <button type="submitRegister" onClick={onLoginClick} className='inputButton'>Ir para Login</button>
+      
+      </div>
+      </form> 
+        
       {error && <p className='errorLabel'>{error}</p>}
       {success && <p className='successLabel'>{success}</p>}
-      <div className='inputContainer'>
-        <button type="rightsubmit" onClick={onLoginClick} className='inputButton'>Ir para Login</button>
-      </div>
+      
     </div>
   )
 }

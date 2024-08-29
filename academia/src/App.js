@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './login/login'
 import Home from './home/home'
 import Register from './login/register'
+import RegisterMember from './member/registerMember'
+import EditMember from './member/editMember'
 import './App.css'
 import { useState } from 'react'
 
@@ -25,6 +27,14 @@ function App() {
          path="/register"
          element={<Register />} 
          />
+         <Route
+         path="/registerMember"
+         element={<RegisterMember />} 
+         />
+         <Route 
+            path="/editMember/:id"  
+            element={<EditMember />} 
+          />
         </Routes>
       </BrowserRouter>
     </div>

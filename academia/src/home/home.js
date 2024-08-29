@@ -42,27 +42,19 @@ const Home = (props) => {
       {loggedIn && (
         <div>
           <div className="buttonContainer">
-            <input
-              className="inputButton"
-              type="button"
-              onClick={handleRegister}
-              value="Registre um novo membro"
-            />
-            <input
-              className="inputButton"
-              type="button"
-              onClick={handleLogout}
-              value="Log out"
-            />
+            <input className="inputButton" type="button" onClick={handleRegister} value="Registre um novo membro" />
+            <input className="inputButton" type="button" onClick={handleLogout} value="Log out" />
           </div>
+          <h3 class ="membrosTitulo">Membros da Academia</h3>
           <div className="membrosContainer">
-            <h3>Membros da Academia</h3>
             <ul>
               {members.map((member) => (
                 <li key={member.id} className="memberItem">
-                  {member.name} - {member.email}
-                  <button onClick={() => handleEdit(member.id)}>Edit</button>
-                  <button onClick={() => handleDelete(member.id)}>Delete</button>
+                  {member.name} - {member.id}
+                  <div className="separador">
+                    <button type="submitHome" onClick={() => handleEdit(member.id)}>Edit</button>
+                    <button type="submitHome" onClick={() => handleDelete(member.id)}>Delete</button>
+                  </div>
                 </li>
               ))}
             </ul>

@@ -70,3 +70,12 @@
   cursor: pointer;
   display: flex;
 }
+
+.membrosTitulo{
+ padding-left: 55px;
+ font-size: 2rem;
+}
+.separador{
+  display: flex;
+  justify-content: space-between;
+}

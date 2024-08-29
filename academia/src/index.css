@@ -51,30 +51,57 @@ input[type='button'] {
   border-radius: 8px;
   cursor: pointer;
 }
+button[type='submit'] {
+  border: none;
+  background: cornflowerblue;
+  color: white;
+  padding: 12px 24px;
+  margin: 8px 8px 8px 50px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+}
+button[type='submitHome'] {
+  border: none;
+  background: cornflowerblue;
+  color: white;
+  padding: 12px 24px;
+  margin: 8px 8px 8px 50px;
+  font-size: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+}
+button[type='submitLogin'] {
+  border: none;
+  background: cornflowerblue;
+  color: white;
+  padding: 12px 24px;
+  margin: 8px 8px 8px 20px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+}
+button[type='submitRegister'] {
+  border: none;
+  background: cornflowerblue;
+  color: white;
+  padding: 12px 24px;
+  margin: 8px 8px 8px 35px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+}
 
-button[type='rightsubmit'] {
-  border: none;
-  background: cornflowerblue;
-  color: white;
-  padding: 12px 24px;
-  margin: -56px 0px 100px 170px;
-  font-size: 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-}
-button[type='leftsubmit'] {
-  border: none;
-  background: cornflowerblue;
-  color: white;
-  padding: 12px 24px;
-  margin: 8px 8px 8px 30px;
-  font-size: 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-}
 button:hover {
+  background-color: lightblue;
+  color: black;
+  cursor: pointer;
+}
+input[type="button"]:hover{
   background-color: lightblue;
   color: black;
   cursor: pointer;

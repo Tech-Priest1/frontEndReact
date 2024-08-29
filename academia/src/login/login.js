@@ -85,16 +85,16 @@ const Login = (props) => {
         <label className="errorLabel">{passwordError}</label>
       </div>
       <br />
-      <div className='inputContainer'>
+      <div className="separador">
         <button
           className='inputButton'
-          type="leftsubmit"
+          type="submitLogin"
           onClick={onButtonClick}>
           Log in
           </button>
           <button
           className='inputButton'
-          type="rightsubmit"
+          type="submitLogin"
           onClick={onRegisterClick}>
           Criar conta
           </button>
