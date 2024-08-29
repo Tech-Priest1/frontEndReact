@@ -27,7 +27,7 @@ const Home = (props) => {
   }
 
   const handleEdit = (id) => {
-    navigate(`/edit-member/${id}`)
+    navigate(`/editMember/${id}`)
   }
 
   return (
