@@ -41,7 +41,15 @@ const Home = (props) => {
       </div>
       <div>
         {loggedIn && <div>Bem vindo, {email}!</div>}
-        {!loggedIn && <div>Faça login para gerenciar a Academia.</div>}
+        {!loggedIn && (
+    <div>
+      <div>Faça login para gerenciar a Academia.</div>
+      <div className="buttonContainer">
+        <button type="button"  onClick={() => navigate('/login')}>Login</button>
+        <button type="button"  onClick={() => navigate('/register')}>Register</button>
+      </div>
+    </div>
+  )}
       </div>
       {loggedIn && (
         <div>
