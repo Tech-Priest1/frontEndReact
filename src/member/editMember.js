@@ -8,7 +8,7 @@ const EditMember = () => {
   const [price, setPrice] = useState('');
   const [gymTypes, setGymTypes] = useState([]);
   const [message, setMessage] = useState('');
-  const [payingTime, setPayingTime] = useState(''); // New state for paying time
+  const [payingTime, setPayingTime] = useState(''); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const EditMember = () => {
       setName(memberToEdit.name);
       setGymType(memberToEdit.gymType);
       setPrice(memberToEdit.price);
-      setPayingTime(memberToEdit.payingTime || ''); // Load the existing paying time
+      setPayingTime(memberToEdit.payingTime || ''); // carrega a data de pagamento
     } else {
       alert('Membro não encontrado!');
       navigate('/');
@@ -33,7 +33,7 @@ const EditMember = () => {
     const currentTime = new Date();
     const startTime = new Date(payingTime);
     const timeDifference = Math.abs(currentTime - startTime);
-    return Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Calculate days passed
+    return Math.floor(timeDifference / (1000 * 60 * 60 * 24)); 
   };
 
   const handleGymTypeChange = (selectedGymType) => {
@@ -65,7 +65,7 @@ const EditMember = () => {
 
     const members = JSON.parse(localStorage.getItem('members')) || [];
     const updatedMembers = members.map(member =>
-      member.id === parseInt(id) ? { ...member, name, gymType, price, payingTime } : member // Include payingTime
+      member.id === parseInt(id) ? { ...member, name, gymType, price, payingTime } : member 
     );
 
     localStorage.setItem('members', JSON.stringify(updatedMembers));
@@ -126,14 +126,14 @@ const EditMember = () => {
             type="date"
             placeholder="Data de Pagamento"
             value={payingTime}
-            onChange={(e) => setPayingTime(e.target.value)} // Update the paying time state
+            onChange={(e) => setPayingTime(e.target.value)} 
             className='inputBox'
             required
           />
         </div>
         <br />
         <div className="mensageEditMembers">
-          {message && <p>{message}</p>} {/* aviso de promoção*/}
+          {message && <p>{message}</p>} {/* local aviso de promoção*/}
         </div>
         <div className="separador">
           <button type="submit" className='inputButton'>Atualizar</button>
