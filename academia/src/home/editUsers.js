@@ -45,7 +45,9 @@ const EditModality = () => {
     setUsers(updatedUsers);
     localStorage.setItem('users', JSON.stringify(updatedUsers));
   };
-
+const handleAdicionar =() =>{
+    navigate('/register');
+ }
   const handleCancel = () => {
     navigate('/');
   };
@@ -58,7 +60,7 @@ const EditModality = () => {
       <ul className="useryList">
         {users.map((user, index) => (
           <li key={index}> 
-            {user.name} - {user.email} - {user.cpf}
+            {user.name} <b>/</b> {user.email} <b>/</b> {user.cpf}
             <div className="separador">
             <button type="submit" className="inputButton" onClick={() => handleEditUser(index)}>Edit</button>
             <button type="submit" className="inputButton" onClick={() => handleDeleteUser(index)}>Delete</button>
@@ -97,15 +99,17 @@ const EditModality = () => {
             onChange={(e) => setEditedCpf(e.target.value)}
             className="inputBoxUser"
           />
-          <div className="separador">
+          <div className="separadorUser">
             <button  type="submit" className="inputButton" onClick={handleSaveUser}>Save</button>
             <button type="submit" className="inputButton" onClick={() => setEditingUserIndex(null)}>Cancel</button>
           </div>
         </div>
       )}
 
-      <div className="fixedBottom">
+      <div className="fixedBottom separador">
         <button type="submit" className="inputButton" onClick={handleCancel}>Cancelar</button>
+        <button type="submit" className="inputButton" onClick={handleAdicionar}>Adicionar</button>
+        
       </div>
     </div>
   );

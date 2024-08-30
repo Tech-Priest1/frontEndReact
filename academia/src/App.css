@@ -172,7 +172,7 @@
   position: sticky;
   padding: 0;
   font-size: 3rem;
-  margin-left: 580px;
+  margin-left: 700px;
   z-index: 10;
 }
 
@@ -209,4 +209,11 @@
   font-size: large;
   border-radius: 8px;
   border: 1px solid grey;
+}
+.separadorUser {
+  
+  display: flex;
+  padding-left: 350px;
+  padding-right: 515px;
+  justify-content: space-between;
 }
