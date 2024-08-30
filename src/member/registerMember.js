@@ -43,7 +43,7 @@ const RegisterMember = () => {
     const lastMember = members[members.length - 1];
     const id = lastMember ? lastMember.id + 1 : 1;
 
-    // Add the member with the paying time
+    
     members.push({ id, name, cpf, gymType, price, payingTime });
     localStorage.setItem('members', JSON.stringify(members));
 
@@ -75,6 +75,8 @@ const RegisterMember = () => {
             onChange={(e) => setcpf(e.target.value)}
             className='inputBox'
             required
+            minLength={11}
+            maxLength={11}
           />
         </div>
         <br />

@@ -77,6 +77,8 @@ const Register = () => {
             onChange={(e) => setPassword(e.target.value)}
             className='inputBox'
             required
+            minLength={5}
+            maxLength={8}
           />
         </div>
         <br />
@@ -88,6 +90,8 @@ const Register = () => {
             onChange={(e) => setCpf(e.target.value)}
             className='inputBox'
             required
+            minLength={11}
+            maxLength={11}
           />
         </div>
         <br/>
