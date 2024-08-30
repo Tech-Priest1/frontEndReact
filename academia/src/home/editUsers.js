@@ -55,13 +55,13 @@ const handleAdicionar =() =>{
   return (
     <div className="userContainer">
       <div>
-        <h3 className="userTitulo">Editar Usuários</h3>
+        <h3 className="userTitulo">Gerenciar Usuários</h3>
       </div>
-      <ul className="useryList">
+      <ul className="userList">
         {users.map((user, index) => (
           <li key={index}> 
             {user.name} <b>/</b> {user.email} <b>/</b> {user.cpf}
-            <div className="separador">
+            <div className="separadorUser1">
             <button type="submit" className="inputButton" onClick={() => handleEditUser(index)}>Edit</button>
             <button type="submit" className="inputButton" onClick={() => handleDeleteUser(index)}>Delete</button>
             </div>
@@ -99,7 +99,7 @@ const handleAdicionar =() =>{
             onChange={(e) => setEditedCpf(e.target.value)}
             className="inputBoxUser"
           />
-          <div className="separadorUser">
+          <div className="separadorUser2">
             <button  type="submit" className="inputButton" onClick={handleSaveUser}>Save</button>
             <button type="submit" className="inputButton" onClick={() => setEditingUserIndex(null)}>Cancel</button>
           </div>
