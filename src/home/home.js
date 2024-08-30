@@ -1,27 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import Navbar from '../navBar/navBar'; 
 
 const Home = (props) => {
-  const { loggedIn, email } = props;
+  const { loggedIn, email, setLoggedIn } = props;
   const navigate = useNavigate();
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
     const storedMembers = JSON.parse(localStorage.getItem('members')) || [];
-    
-    const membersWithGymTime = storedMembers.map(member => ({
-      ...member,
-      gymTime: Math.floor(Math.random() * 101) 
-    }));
-    
-    const randomValue = Math.floor(Math.random() * 101);
-    localStorage.setItem('randomValue', randomValue);
-    
+
+    const membersWithGymTime = storedMembers.map(member => {
+      const payingTime = new Date(member.payingTime);
+      const currentTime = new Date();
+      const timeDifference = Math.abs(currentTime - payingTime);
+      const gymTime = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // calcula os dias baseado na data de pagamento
+      return {
+        ...member,
+        gymTime,
+      };
+    });
+
     setMembers(membersWithGymTime);
   }, []);
 
-  
+  const handleLogout = () => {
+    setLoggedIn(false);
+    navigate('/login');
+  };
+
   const handleDelete = (id) => {
     const updatedMembers = members.filter(member => member.id !== id);
     setMembers(updatedMembers);
@@ -34,7 +41,7 @@ const Home = (props) => {
 
   return (
     <div className="mainContainer">
-     
+      <Navbar handleLogout={handleLogout} />
       <div className="titleContainerHome">
         <div>Gerenciamento da Academia</div>
       </div>
@@ -44,8 +51,8 @@ const Home = (props) => {
           <div>
             <div>Faça login para gerenciar a Academia.</div>
             <div className="separador">
-              <button type="submit" className='inputButton' onClick={() => navigate('/login')}>Login</button>
-              <button type="submit" className='inputButton' onClick={() => navigate('/register')}>Registrar</button>
+              <button type="button" className='inputButton' onClick={() => navigate('/login')}>Login</button>
+              <button type="button" className='inputButton' onClick={() => navigate('/register')}>Registrar</button>
             </div>
           </div>
         )}
@@ -58,8 +65,8 @@ const Home = (props) => {
               <li key={member.id} className="memberItem">
                 <b>Id:</b> {member.id} <b>Nome:</b> {member.name} / <b>Tempo de Academia:</b> {member.gymTime} Dias
                 <div className="separador">
-                  <button type="submitHome" className="inputButton" onClick={() => handleEdit(member.id)}>Edit</button>
-                  <button type="submitHome" className="inputButton" onClick={() => handleDelete(member.id)}>Delete</button>
+                  <button type="button" onClick={() => handleEdit(member.id)}>Edit</button>
+                  <button type="button" onClick={() => handleDelete(member.id)}>Delete</button>
                 </div>
               </li>
             ))}

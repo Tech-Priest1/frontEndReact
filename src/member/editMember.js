@@ -7,15 +7,13 @@ const EditMember = () => {
   const [gymType, setGymType] = useState('');
   const [price, setPrice] = useState('');
   const [gymTypes, setGymTypes] = useState([]);
-  const [message, setMessage] = useState(''); 
-  const [randomValue, setRandomValue] = useState(''); 
+  const [message, setMessage] = useState('');
+  const [payingTime, setPayingTime] = useState(''); // New state for paying time
   const navigate = useNavigate();
 
   useEffect(() => {
     const members = JSON.parse(localStorage.getItem('members')) || [];
     const memberToEdit = members.find(member => member.id === parseInt(id));
-    const randomValueFromStorage = localStorage.getItem('randomValue')|| [];
-    setRandomValue(randomValueFromStorage);
 
     const storedGymTypes = JSON.parse(localStorage.getItem('gymTypes')) || [];
     setGymTypes(storedGymTypes);
@@ -24,23 +22,32 @@ const EditMember = () => {
       setName(memberToEdit.name);
       setGymType(memberToEdit.gymType);
       setPrice(memberToEdit.price);
+      setPayingTime(memberToEdit.payingTime || ''); // Load the existing paying time
     } else {
       alert('Membro não encontrado!');
       navigate('/');
     }
   }, [id, navigate]);
 
+  const calculateDaysSincePayingTime = (payingTime) => {
+    const currentTime = new Date();
+    const startTime = new Date(payingTime);
+    const timeDifference = Math.abs(currentTime - startTime);
+    return Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Calculate days passed
+  };
+
   const handleGymTypeChange = (selectedGymType) => {
     setGymType(selectedGymType);
 
     const selectedGymTypeObj = gymTypes.find(type => type.name === selectedGymType);
     if (selectedGymTypeObj) {
-      if (randomValue > 30) {
+      const daysSincePayingTime = calculateDaysSincePayingTime(payingTime);
+      if (daysSincePayingTime > 30) {
         setPrice(selectedGymTypeObj.promotionalPrice);
-        setMessage(`Esse usuário está elegivel ao preço promocinal / Dias de academia: (${randomValue}).`);
+        setMessage(`Esse usuário está elegível ao preço promocional / Dias de academia: ${daysSincePayingTime}.`);
       } else {
         setPrice(selectedGymTypeObj.normalPrice);
-        setMessage(` Esse usuário não está elegivel ao preço promocinal / Dias de academia: (${randomValue}). mínimo: 30dias.`);
+        setMessage(`Esse usuário não está elegível ao preço promocional / Dias de academia: ${daysSincePayingTime}. Mínimo: 30 dias.`);
       }
     }
   };
@@ -58,7 +65,7 @@ const EditMember = () => {
 
     const members = JSON.parse(localStorage.getItem('members')) || [];
     const updatedMembers = members.map(member =>
-      member.id === parseInt(id) ? { ...member, name, gymType, price } : member
+      member.id === parseInt(id) ? { ...member, name, gymType, price, payingTime } : member // Include payingTime
     );
 
     localStorage.setItem('members', JSON.stringify(updatedMembers));
@@ -113,6 +120,18 @@ const EditMember = () => {
             </select>
           </div>
         )}
+        <br />
+        <div>
+          <input
+            type="date"
+            placeholder="Data de Pagamento"
+            value={payingTime}
+            onChange={(e) => setPayingTime(e.target.value)} // Update the paying time state
+            className='inputBox'
+            required
+          />
+        </div>
+        <br />
         <div className="mensageEditMembers">
           {message && <p>{message}</p>} {/* aviso de promoção*/}
         </div>

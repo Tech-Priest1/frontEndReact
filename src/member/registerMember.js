@@ -7,6 +7,7 @@ const RegisterMember = () => {
   const [gymType, setGymType] = useState('');
   const [price, setPrice] = useState('');
   const [priceType, setPriceType] = useState('normal'); 
+  const [payingTime, setPayingTime] = useState(''); // New state for paying time
   const [gymTypes, setGymTypes] = useState([]);
   const navigate = useNavigate();
 
@@ -16,7 +17,6 @@ const RegisterMember = () => {
   }, []);
 
   useEffect(() => {
-  
     if (gymType) {
       const selectedGymType = gymTypes.find(type => type.name === gymType);
       if (selectedGymType) {
@@ -42,7 +42,9 @@ const RegisterMember = () => {
 
     const lastMember = members[members.length - 1];
     const id = lastMember ? lastMember.id + 1 : 1;
-    members.push({ id, name, cpf, gymType, price });
+
+    // Add the member with the paying time
+    members.push({ id, name, cpf, gymType, price, payingTime });
     localStorage.setItem('members', JSON.stringify(members));
 
     navigate('/');
@@ -67,8 +69,8 @@ const RegisterMember = () => {
         <br />
         <div>
           <input
-            type="cpf"
-            placeholder="cpf"
+            type="text"
+            placeholder="CPF"
             value={cpf}
             onChange={(e) => setcpf(e.target.value)}
             className='inputBox'
@@ -113,9 +115,21 @@ const RegisterMember = () => {
             readOnly
           />
         </div>
+        <br />
+        <div>
+          <input
+            type="date"
+            placeholder="Data de Pagamento"
+            value={payingTime}
+            onChange={(e) => setPayingTime(e.target.value)} // data do pagamento
+            className='inputBox'
+            required
+          />
+        </div>
+        <br />
         <div className="separador">
           <button type="submit" className='inputButton'>Registrar</button>
-          <button type="submit" className='inputButton' onClick={onCancelClick}>Cancelar</button>
+          <button type="button" className='inputButton' onClick={onCancelClick}>Cancelar</button>
         </div>
       </form>
     </div>
