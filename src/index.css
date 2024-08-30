@@ -62,6 +62,17 @@ button[type='submit'] {
   cursor: pointer;
   display:flex;
 }
+button[type='button'] {
+  border: none;
+  background: cornflowerblue;
+  color: white;
+  padding: 12px 24px;
+  margin: 8px 8px 8px 50px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display:flex;
+}
 
 
 button[type='submitHome'] {

@@ -6,6 +6,10 @@ const EditModality = () => {
   const [newGymType, setNewGymType] = useState('');
   const [normalPrice, setNormalPrice] = useState('');
   const [promotionalPrice, setPromotionalPrice] = useState('');
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editedName, setEditedName] = useState('');
+  const [editedNormalPrice, setEditedNormalPrice] = useState('');
+  const [editedPromotionalPrice, setEditedPromotionalPrice] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,12 +20,12 @@ const EditModality = () => {
   const handleAddGymType = () => {
     if (newGymType.trim() && normalPrice.trim() && promotionalPrice.trim()) {
       const updatedGymTypes = [
-        ...gymTypes, 
-        { 
-          name: newGymType, 
-          normalPrice: parseFloat(normalPrice), 
-          promotionalPrice: parseFloat(promotionalPrice) 
-        }
+        ...gymTypes,
+        {
+          name: newGymType,
+          normalPrice: parseFloat(normalPrice),
+          promotionalPrice: parseFloat(promotionalPrice),
+        },
       ];
       setGymTypes(updatedGymTypes);
       localStorage.setItem('gymTypes', JSON.stringify(updatedGymTypes));
@@ -37,7 +41,36 @@ const EditModality = () => {
     localStorage.setItem('gymTypes', JSON.stringify(updatedGymTypes));
   };
 
+  const handleEditModality = (index) => {
+    const gymType = gymTypes[index];
+    setEditingIndex(index);
+    setEditedName(gymType.name);
+    setEditedNormalPrice(gymType.normalPrice.toString()); // converte strings
+    setEditedPromotionalPrice(gymType.promotionalPrice.toString());
+  };
+
+  const handleSaveModality = () => {
+    if (editingIndex !== null) {
+      const updatedGymTypes = [...gymTypes];
+      updatedGymTypes[editingIndex] = {
+        name: editedName,
+        normalPrice: parseFloat(editedNormalPrice),
+        promotionalPrice: parseFloat(editedPromotionalPrice),
+      };
+      setGymTypes(updatedGymTypes);
+      localStorage.setItem('gymTypes', JSON.stringify(updatedGymTypes));
+      setEditingIndex(null);
+      setEditedName('');
+      setEditedNormalPrice('');
+      setEditedPromotionalPrice('');
+    }
+  };
+
   const handleCancel = () => {
+    setEditingIndex(null);
+    setNewGymType('');
+    setNormalPrice('');
+    setPromotionalPrice('');
     navigate('/');
   };
 
@@ -50,7 +83,10 @@ const EditModality = () => {
         {gymTypes.map((gymType, index) => (
           <li key={index}>
             {gymType.name} - Normal: {gymType.normalPrice} - Promocional: {gymType.promotionalPrice}
-            <button type="submitModality" className='inputButton' onClick={() => handleDeleteGymType(index)}>Delete</button>
+            <div className="separadorModality">
+              <button type="button" className="inputButton" onClick={() => handleEditModality(index)}>Edit</button>
+              <button type="button" className="inputButton" onClick={() => handleDeleteGymType(index)}>Delete</button>
+            </div>
           </li>
         ))}
       </ul>
@@ -58,29 +94,43 @@ const EditModality = () => {
       <div className="fixedBottom">
         <input
           type="text"
-          placeholder="Nova Modalidade"
-          value={newGymType}
-          onChange={(e) => setNewGymType(e.target.value)}
+          placeholder={editingIndex !== null ? 'Nome' : 'Nova Modalidade'}
+          value={editingIndex !== null ? editedName : newGymType}
+          onChange={(e) => editingIndex !== null ? setEditedName(e.target.value) : setNewGymType(e.target.value)}
           className="inputBoxModality"
         />
         <input
           type="text"
           placeholder="Preço Normal"
-          value={normalPrice}
-          onChange={(e) => setNormalPrice(e.target.value)}
+          value={editingIndex !== null ? editedNormalPrice : normalPrice}
+          onChange={(e) => editingIndex !== null ? setEditedNormalPrice(e.target.value) : setNormalPrice(e.target.value)}
           className="inputBoxModality"
         />
         <input
           type="text"
           placeholder="Preço Promocional"
-          value={promotionalPrice}
-          onChange={(e) => setPromotionalPrice(e.target.value)}
+          value={editingIndex !== null ? editedPromotionalPrice : promotionalPrice}
+          onChange={(e) => editingIndex !== null ? setEditedPromotionalPrice(e.target.value) : setPromotionalPrice(e.target.value)}
           className="inputBoxModality"
         />
-        <div className="separadorModality">
-          <button type="submit" className='inputButton' onClick={handleAddGymType}>Adicionar</button>
-          <button type="submit" className='inputButton' onClick={handleCancel}>Cancelar</button>
-        </div>
+        
+          {editingIndex !== null ? (
+            <>
+            <div className="separador">
+              <button type="button" className="inputButton" onClick={handleSaveModality}>Save</button>
+              <button type="button" className="inputButton" onClick={() => setEditingIndex(null)}>Cancel</button>
+           </div> 
+           </>
+         
+          ) : (
+            <>
+             <div className="separador">
+              <button type="button" className="inputButton" onClick={handleAddGymType}>Adicionar</button>
+              <button type="button" className="inputButton" onClick={handleCancel}>Cancelar</button>
+              </div>
+            </>
+          )}
+         
       </div>
     </div>
   );

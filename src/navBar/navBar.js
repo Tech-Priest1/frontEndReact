@@ -20,8 +20,8 @@ const Navbar = ({ handleLogout }) => {
   return (
     <div className="navbar">
       <input className="inputButton" type="button" onClick={handleUsers} value="Gerenciar Usuários" />
-      <input className="inputButton" type="button" onClick={handleRegister} value="Registrar Membros" />
       <input className="inputButton" type="button" onClick={editGymTypes} value="Gerenciar Modalidades" />
+      <input className="inputButton" type="button" onClick={handleRegister} value="Registrar Membros" />
       <input className="inputButton" type="button" onClick={handleLogout} value="Log Out" />
     </div>
   );
