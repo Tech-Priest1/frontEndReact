@@ -5,6 +5,9 @@ import './navBar.css';
 const Navbar = ({ handleLogout }) => {
   const navigate = useNavigate();
 
+  const handleHome = () => {
+    navigate('/');
+  };
   const handleRegister = () => {
     navigate('/registerMember');
   };
@@ -19,6 +22,7 @@ const Navbar = ({ handleLogout }) => {
 
   return (
     <div className="navbar">
+      <input className="inputButton" type="button" onClick={handleHome} value="Início" />
       <input className="inputButton" type="button" onClick={handleUsers} value="Gerenciar Usuários" />
       <input className="inputButton" type="button" onClick={editGymTypes} value="Gerenciar Modalidades" />
       <input className="inputButton" type="button" onClick={handleRegister} value="Registrar Membros" />

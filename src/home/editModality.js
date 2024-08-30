@@ -84,7 +84,7 @@ const EditModality = () => {
           <li key={index}>
             {gymType.name} - Normal: {gymType.normalPrice} - Promocional: {gymType.promotionalPrice}
             <div className="separadorModality">
-              <button type="button" className="inputButton" onClick={() => handleEditModality(index)}>Edit</button>
+              <button type="button" className="inputButton" onClick={() => handleEditModality(index)}>Editar</button>
               <button type="button" className="inputButton" onClick={() => handleDeleteGymType(index)}>Delete</button>
             </div>
           </li>
@@ -117,8 +117,8 @@ const EditModality = () => {
           {editingIndex !== null ? (
             <>
             <div className="separador">
-              <button type="button" className="inputButton" onClick={handleSaveModality}>Save</button>
-              <button type="button" className="inputButton" onClick={() => setEditingIndex(null)}>Cancel</button>
+              <button type="button" className="inputButton" onClick={handleSaveModality}>Salvar</button>
+              <button type="button" className="inputButton" onClick={() => setEditingIndex(null)}>Cancelar</button>
            </div> 
            </>
          

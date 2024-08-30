@@ -14,6 +14,7 @@
   align-items: center;
   justify-content: center;
   margin-top: -50px;
+  
 }
 .mensageEditMembers{ 
   padding-top: 20px;
@@ -77,7 +78,7 @@
   width: 400px;
   font-size: large;
   border-radius: 8px;
-  border: 1px solid grey; /* cor das bordas do inputs */
+  border: 1px solid rgb(0, 0, 0); /* cor das bordas do inputs */
   padding-left: 8px;
   margin: 8px;
   
@@ -87,7 +88,7 @@
 .membrosContainer {
   max-height: 400px; 
   overflow-y: auto;
-  border: 1px solid #ccc; 
+  border: 1px solid #000000; 
   padding: 20px;
   margin-top: 100px;
   position: relative;
@@ -98,7 +99,7 @@
   top: 0;
   background-color: rgb(225, 225, 225); /* cor de fundo do header */
   padding: 20px;
-  padding-left: 50px;
+  padding-left: 180px;
   margin: 0;
   z-index: 10;
 }
@@ -112,7 +113,7 @@
 
 .memberItem {
   padding: 10px;
-  border-bottom: 1px solid #ddd; 
+  border-bottom: 1px solid #000000; 
 }
 
 .separador{
@@ -123,7 +124,7 @@
 .modalityContainer {
   max-height: 1000px; 
   overflow-y: auto;
-  border: 1px solid #ccc;
+  border: 1px solid rgb(0, 0, 0);
   padding: 20px;
   margin-right: auto; 
   margin-left: auto; 
@@ -156,13 +157,13 @@
 
 .modalityItem {
   padding: 10px;
-  border-bottom: 1px solid #ddd;/* cor da box da lista */
+  border-bottom: 1px solid #000000;/* cor da box da lista */
 }
 
 .fixedBottom {
   position: sticky;
   bottom: 0;
-  background-color: white;
+  background-color: rgb(0, 0, 0);
   padding: 10px;
   z-index: 10;
   box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1); /* cor da linha do bottom */
@@ -175,7 +176,7 @@
   margin-bottom: 10px;
   font-size: large;
   border-radius: 8px;
-  border: 1px solid grey;
+  border: 1px solid rgb(0, 0, 0);
   box-sizing: border-box;
 }
 
@@ -190,7 +191,7 @@
 .userContainer {
   max-height: 1000px; 
   overflow-y: auto;
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   padding: 20px;
   margin-right: auto; 
   margin-left: auto; 
@@ -223,13 +224,13 @@
 
 .userItem {
   padding: 10px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #000000;
 }
 
 .fixedBottom {
   position: sticky;
   bottom: 0;
-  background-color: white;
+  background-color: rgb(212, 212, 212);
   padding: 10px;
   z-index: 10;
   box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
@@ -242,7 +243,7 @@
   padding-left: 500px;
   font-size: large;
   border-radius: 8px;
-  border: 1px solid grey;
+  border: 1px solid rgb(0, 0, 0);
   box-sizing: border-box;
 }
 

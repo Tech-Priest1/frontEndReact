@@ -100,15 +100,15 @@ const handleAdicionar =() =>{
             className="inputBoxUser"
           />
           <div className="separadorUser2">
-            <button  type="submit" className="inputButton" onClick={handleSaveUser}>Save</button>
-            <button type="submit" className="inputButton" onClick={() => setEditingUserIndex(null)}>Cancel</button>
+            <button  type="submit" className="inputButton" onClick={handleSaveUser}>Salvar</button>
+            <button type="submit" className="inputButton" onClick={() => setEditingUserIndex(null)}>Cancelar</button>
           </div>
         </div>
       )}
 
       <div className="fixedBottom separador">
-        <button type="submit" className="inputButton" onClick={handleCancel}>Cancelar</button>
         <button type="submit" className="inputButton" onClick={handleAdicionar}>Adicionar</button>
+        <button type="submit" className="inputButton" onClick={handleCancel}>Cancelar</button>
         
       </div>
     </div>
