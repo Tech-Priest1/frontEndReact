@@ -112,7 +112,7 @@
   position: sticky;
   padding: 0;
   font-size: 3rem;
-  margin-left: 580px;
+  margin-left: 600px;
   z-index: 10;
 }
 
@@ -120,8 +120,8 @@
   list-style-type: none;
   font-size: 1.2rem;
   padding: 300px;
-  margin: 10px;
-  margin-left: 500px;
+  margin: -130px;
+  margin-left: 400px;
   flex-grow: 1; /* Allows the list to take available space */
   overflow-y: auto;
 }
