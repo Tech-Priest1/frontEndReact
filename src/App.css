@@ -165,8 +165,8 @@
 }
 
 .modalityText {
-  flex: 1; /* Takes up remaining space */
-  margin-right: 20px; /* Space between text and buttons */
+  flex: 1; 
+  margin-right: 20px; 
   padding: 0px;
 }
 

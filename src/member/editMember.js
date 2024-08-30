@@ -132,7 +132,7 @@ const EditMember = () => {
           />
         </div>
         <br />
-        <div className="mensageEditMembers">
+        <div className="memberContainerMessage">
           {message && <p>{message}</p>} {/* local aviso de promoção*/}
         </div>
         <div className="separador">
