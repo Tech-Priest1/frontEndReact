@@ -63,6 +63,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  padding: 10px;
 }
 
 .inputContainer > .errorLabel {
@@ -77,6 +78,9 @@
   border-radius: 8px;
   border: 1px solid grey; /* cor das bordas do inputs */
   padding-left: 8px;
+  margin: 8px;
+  
+
 }
 
 .membrosContainer {
