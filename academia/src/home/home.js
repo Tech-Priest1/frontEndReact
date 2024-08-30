@@ -13,8 +13,12 @@ const Home = (props) => {
       ...member,
       gymTime: Math.floor(Math.random() * 101) 
     }));
+    
+    const randomValue = Math.floor(Math.random() * 101);
+    localStorage.setItem('randomValue', randomValue);
+    
     setMembers(membersWithGymTime);
-  }, []);
+}, []);
 
   const handleLogout = () => {
     setLoggedIn(false);

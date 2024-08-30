@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const EditMember = () => {
-  const { id } = useParams(); // Get the member ID from the URL
+  const { id } = useParams();
   const [name, setName] = useState('');
   const [gymType, setGymType] = useState('');
   const [price, setPrice] = useState('');
   const [gymTypes, setGymTypes] = useState([]);
-
+  const [message, setMessage] = useState(''); 
+  const [randomValue, setRandomValue] = useState(''); 
   const navigate = useNavigate();
 
   useEffect(() => {
-  
     const members = JSON.parse(localStorage.getItem('members')) || [];
     const memberToEdit = members.find(member => member.id === parseInt(id));
+    const randomValueFromStorage = localStorage.getItem('randomValue')|| [];
+    setRandomValue(randomValueFromStorage);
 
     const storedGymTypes = JSON.parse(localStorage.getItem('gymTypes')) || [];
     setGymTypes(storedGymTypes);
@@ -31,10 +33,15 @@ const EditMember = () => {
   const handleGymTypeChange = (selectedGymType) => {
     setGymType(selectedGymType);
 
-    
     const selectedGymTypeObj = gymTypes.find(type => type.name === selectedGymType);
     if (selectedGymTypeObj) {
-      setPrice(selectedGymTypeObj.normalPrice); 
+      if (randomValue > 30) {
+        setPrice(selectedGymTypeObj.promotionalPrice);
+        setMessage(`Esse usuário está elegivel ao preço promocinal / Dias de academia: (${randomValue}).`);
+      } else {
+        setPrice(selectedGymTypeObj.normalPrice);
+        setMessage(` Esse usuário não está elegivel ao preço promocinal / Dias de academia: (${randomValue}). mínimo: 30dias.`);
+      }
     }
   };
 
@@ -55,7 +62,6 @@ const EditMember = () => {
     );
 
     localStorage.setItem('members', JSON.stringify(updatedMembers));
-
     navigate('/');
   };
 
@@ -89,7 +95,7 @@ const EditMember = () => {
             ))}
           </select>
         </div>
-        <br />
+       
         {gymType && (
           <div>
             <select
@@ -107,7 +113,9 @@ const EditMember = () => {
             </select>
           </div>
         )}
-        <br />
+        <div className="mensageEditMembers">
+          {message && <p>{message}</p>} {/* aviso de promoção*/}
+        </div>
         <div className="separador">
           <button type="submit" className='inputButton'>Atualizar</button>
           <button type="submit" className='inputButton' onClick={onCancelClick}>Cancelar</button>

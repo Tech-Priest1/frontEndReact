@@ -14,7 +14,14 @@
   align-items: center;
   justify-content: center;
 }
+.mensageEditMembers{ 
+  padding-top: 20px;
+  margin-left: -100px;
+ 
+  
 
+ 
+}
 .titleContainerHome {
   display: flex;
   flex-direction: column;
@@ -68,7 +75,7 @@
   width: 400px;
   font-size: large;
   border-radius: 8px;
-  border: 1px solid grey;
+  border: 1px solid grey; /* cor das bordas do inputs */
   padding-left: 8px;
 }
 
@@ -111,35 +118,39 @@
 .modalityContainer {
   max-height: 1000px; 
   overflow-y: auto;
-  border: 1px solid #ccc; 
-  padding: 50px;
-  margin-right: -50px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-right: auto; 
+  margin-left: auto; 
+  max-width: 1200px; 
   position: relative;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .modalityTitulo {
   position: sticky;
   padding: 0;
   font-size: 3rem;
-  margin-left: 600px;
+  text-align: center;
   z-index: 10;
 }
 
 .modalityList {
   list-style-type: none;
   font-size: 1.2rem;
-  padding: 300px;
-  margin: -130px;
-  margin-left: 400px;
-  flex-grow: 1; 
+  padding: 0;
+  padding-left: 400px;
+  margin: 20px 0;
+  flex-grow: 1;
   overflow-y: auto;
+  width: 100%;
 }
 
 .modalityItem {
   padding: 10px;
-  border-bottom: 1px solid #ddd; 
+  border-bottom: 1px solid #ddd;/* cor da box da lista */
 }
 
 .fixedBottom {
@@ -148,26 +159,26 @@
   background-color: white;
   padding: 10px;
   z-index: 10;
-  box-shadow: 0px -2px 5px rgba(0,0,0,0.1); /* sombra para separar bottom*/
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1); /* cor da linha do bottom */
 }
 
 .inputBoxModality {
   height: 48px;
-  width: 50%;
-  padding-left: 375px;
-  margin-left: 400px;
-  margin-bottom: 10px; 
+  width: 100%; 
+  padding-left: 500px;
+  margin-bottom: 10px;
   font-size: large;
   border-radius: 8px;
   border: 1px solid grey;
+  box-sizing: border-box;
 }
+
 .separadorModality {
-  
   display: flex;
-  padding-left: 350px;
-  padding-right: 515px;
   justify-content: space-between;
+  padding: 0 20px; 
 }
+
 .userContainer {
   max-height: 1000px; 
   overflow-y: auto;
