@@ -140,13 +140,18 @@
   box-shadow: 0px -2px 5px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow to separate the fixed bottom */
 }
 
-.inputBox {
+.inputBoxModality {
+  height: 48px;
   width: 50%;
   padding-left: 375px;
   margin-left: 400px;
-  margin-bottom: 10px; /* Adds spacing between the input and buttons */
+  margin-bottom: 10px; /* Adds spacing between the input and buttons */ 
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
 }
 .separadorModality {
+  
   display: flex;
   padding-left: 350px;
   padding-right: 515px;

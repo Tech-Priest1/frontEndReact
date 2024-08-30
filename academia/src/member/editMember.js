@@ -1,44 +1,63 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EditMember = () => {
-  const { id } = useParams() // Get the member ID from the URL
-  const [name, setName] = useState('')
-  const [gymType, setGymType] = useState('')
-  const [price, setPrice] = useState('')
+  const { id } = useParams(); // Get the member ID from the URL
+  const [name, setName] = useState('');
+  const [gymType, setGymType] = useState('');
+  const [price, setPrice] = useState('');
+  const [gymTypes, setGymTypes] = useState([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const members = JSON.parse(localStorage.getItem('members')) || []
-    const memberToEdit = members.find(member => member.id === parseInt(id))
+  
+    const members = JSON.parse(localStorage.getItem('members')) || [];
+    const memberToEdit = members.find(member => member.id === parseInt(id));
+
+    const storedGymTypes = JSON.parse(localStorage.getItem('gymTypes')) || [];
+    setGymTypes(storedGymTypes);
 
     if (memberToEdit) {
-      setName(memberToEdit.name)
-      setGymType(memberToEdit.gymType)
-      setPrice(memberToEdit.price)
+      setName(memberToEdit.name);
+      setGymType(memberToEdit.gymType);
+      setPrice(memberToEdit.price);
     } else {
-      alert('Membro não encontrado!')
-      navigate('/')
+      alert('Membro não encontrado!');
+      navigate('/');
     }
-  }, [id, navigate])
+  }, [id, navigate]);
+
+  const handleGymTypeChange = (selectedGymType) => {
+    setGymType(selectedGymType);
+
+    
+    const selectedGymTypeObj = gymTypes.find(type => type.name === selectedGymType);
+    if (selectedGymTypeObj) {
+      setPrice(selectedGymTypeObj.normalPrice); 
+    }
+  };
+
+  const handlePriceChange = (selectedPrice) => {
+    setPrice(selectedPrice);
+  };
 
   const onCancelClick = () => {
-    navigate('/')
-  }
+    navigate('/');
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const members = JSON.parse(localStorage.getItem('members')) || []
+    const members = JSON.parse(localStorage.getItem('members')) || [];
     const updatedMembers = members.map(member =>
       member.id === parseInt(id) ? { ...member, name, gymType, price } : member
-    )
+    );
 
-    localStorage.setItem('members', JSON.stringify(updatedMembers))
+    localStorage.setItem('members', JSON.stringify(updatedMembers));
 
-    navigate('/')
-  }
+    navigate('/');
+  };
 
   return (
     <div className="mainContainer">
@@ -58,33 +77,44 @@ const EditMember = () => {
         </div>
         <br />
         <div>
-          <input
-            type="gymType"
-            placeholder="Tipo da Inscrição"
+          <select
             value={gymType}
-            onChange={(e) => setGymType(e.target.value)}
+            onChange={(e) => handleGymTypeChange(e.target.value)}
             className='inputBox'
             required
-          />
+          >
+            <option value="" disabled>Selecione a modalidade</option>
+            {gymTypes.map((type, index) => (
+              <option key={index} value={type.name}>{type.name}</option>
+            ))}
+          </select>
         </div>
         <br />
-        <div>
-          <input
-            type="text"
-            placeholder="Valor"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            className='inputBox'
-            required
-          />
-        </div>
+        {gymType && (
+          <div>
+            <select
+              value={price}
+              onChange={(e) => handlePriceChange(e.target.value)}
+              className='inputBox'
+              required
+            >
+              <option value={gymTypes.find(type => type.name === gymType)?.normalPrice || ''}>
+                Normal: {gymTypes.find(type => type.name === gymType)?.normalPrice || ''}
+              </option>
+              <option value={gymTypes.find(type => type.name === gymType)?.promotionalPrice || ''}>
+                Promocional: {gymTypes.find(type => type.name === gymType)?.promotionalPrice || ''}
+              </option>
+            </select>
+          </div>
+        )}
+        <br />
         <div className="separador">
           <button type="submit" className='inputButton'>Atualizar</button>
           <button type="submit" className='inputButton' onClick={onCancelClick}>Cancelar</button>
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditMember
+export default EditMember;

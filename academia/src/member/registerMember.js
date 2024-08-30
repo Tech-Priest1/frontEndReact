@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 const RegisterMember = () => {
   const [name, setName] = useState('');
+  const [cpf, setcpf] = useState('');
   const [gymType, setGymType] = useState('');
   const [price, setPrice] = useState('');
+  const [priceType, setPriceType] = useState('normal'); 
   const [gymTypes, setGymTypes] = useState([]);
   const navigate = useNavigate();
 
@@ -12,6 +14,16 @@ const RegisterMember = () => {
     const storedGymTypes = JSON.parse(localStorage.getItem('gymTypes')) || [];
     setGymTypes(storedGymTypes);
   }, []);
+
+  useEffect(() => {
+  
+    if (gymType) {
+      const selectedGymType = gymTypes.find(type => type.name === gymType);
+      if (selectedGymType) {
+        setPrice(priceType === 'normal' ? selectedGymType.normalPrice : selectedGymType.promotionalPrice);
+      }
+    }
+  }, [gymType, priceType, gymTypes]);
 
   const onCancelClick = () => {
     navigate('/');
@@ -22,7 +34,7 @@ const RegisterMember = () => {
 
     const members = JSON.parse(localStorage.getItem('members')) || [];
 
-    const existingMember = members.find(member => member.name === name);
+    const existingMember = members.find(member => member.cpf === cpf);
     if (existingMember) {
       alert('Membro já existe!');
       return;
@@ -30,7 +42,7 @@ const RegisterMember = () => {
 
     const lastMember = members[members.length - 1];
     const id = lastMember ? lastMember.id + 1 : 1;
-    members.push({ id, name, gymType, price });
+    members.push({ id, name, cpf, gymType, price });
     localStorage.setItem('members', JSON.stringify(members));
 
     navigate('/');
@@ -43,20 +55,63 @@ const RegisterMember = () => {
       </div>
       <form className='inputContainer' onSubmit={handleSubmit}>
         <div>
-          <input type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} className='inputBox' required />
+          <input
+            type="text"
+            placeholder="Nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className='inputBox'
+            required
+          />
         </div>
         <br />
         <div>
-          <select value={gymType} onChange={(e) => setGymType(e.target.value)} className='inputBox' required>
+          <input
+            type="cpf"
+            placeholder="cpf"
+            value={cpf}
+            onChange={(e) => setcpf(e.target.value)}
+            className='inputBox'
+            required
+          />
+        </div>
+        <br />
+        <div>
+          <select
+            value={gymType}
+            onChange={(e) => setGymType(e.target.value)}
+            className='inputBox'
+            required
+          >
             <option value="" disabled>Selecione a modalidade</option>
             {gymTypes.map((type, index) => (
-              <option key={index} value={type}>{type}</option>
+              <option key={index} value={type.name}>{type.name}</option>
             ))}
           </select>
         </div>
         <br />
         <div>
-          <input type="text" placeholder="Valor" value={price} onChange={(e) => setPrice(e.target.value)} className='inputBox' required />
+          <select
+            value={priceType}
+            onChange={(e) => setPriceType(e.target.value)}
+            className='inputBox'
+            required
+          >
+            <option value="normal">Preço Normal</option>
+            <option value="promotional">Preço Promocional</option>
+          </select>
+        </div>
+        <br />
+        <div>
+          <input
+            type="text"
+            placeholder="Valor"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className='inputBox'
+            required
+            readOnly
+          />
         </div>
         <div className="separador">
           <button type="submit" className='inputButton'>Registrar</button>

@@ -14,9 +14,21 @@ function App() {
   const [email, setEmail] = useState('')
 
   useEffect(() => {
-    const initialGymTypes = ['Musculação', 'Jiu-jitsu', 'Judô'];
+    const initialGymTypes = [
+      {
+        name: "Musculação",
+        normalPrice: 50,
+        promotionalPrice: 40
+      },
+      {
+        name: "judô",
+        normalPrice: 80,
+        promotionalPrice: 70
+      }
+    ];
+  
     const storedGymTypes = JSON.parse(localStorage.getItem('gymTypes'));
-
+  
     if (!storedGymTypes || storedGymTypes.length === 0) {
       localStorage.setItem('gymTypes', JSON.stringify(initialGymTypes));
     }
@@ -49,6 +61,10 @@ function App() {
            <Route 
             path="/editModality/"  
             element={<EditModality />} 
+          />
+          <Route 
+            path="*" 
+            element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} 
           />
         </Routes>
       </BrowserRouter>
