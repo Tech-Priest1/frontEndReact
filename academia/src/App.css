@@ -157,3 +157,56 @@
   padding-right: 515px;
   justify-content: space-between;
 }
+.userContainer {
+  max-height: 1000px; /* Adjust based on the desired height */
+  overflow-y: auto;
+  border: 1px solid #ccc; /* Optional: adds a border to the container */
+  padding: 50px;
+  margin-right: -50px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.userTitulo {
+  position: sticky;
+  padding: 0;
+  font-size: 3rem;
+  margin-left: 580px;
+  z-index: 10;
+}
+
+.userList {
+  list-style-type: none;
+  font-size: 1.2rem;
+  padding: 300px;
+  margin: 10px;
+  margin-left: 500px;
+  flex-grow: 1; /* Allows the list to take available space */
+  overflow-y: auto;
+}
+
+.userItem {
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Optional: adds a bottom border to each item */
+}
+
+.fixedBottom {
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+  padding: 10px;
+  z-index: 10;
+  box-shadow: 0px -2px 5px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow to separate the fixed bottom */
+}
+
+.inputBoxUser {
+  height: 48px;
+  width: 50%;
+  padding-left: 375px;
+  margin-left: 400px;
+  margin-bottom: 10px; /* Adds spacing between the input and buttons */ 
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
+}
