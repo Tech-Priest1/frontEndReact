@@ -8,7 +8,7 @@ const Home = (props) => {
 
   useEffect(() => {
     const storedMembers = JSON.parse(localStorage.getItem('members')) || [];
-    // Add random "Gym Time" to each member
+    
     const membersWithGymTime = storedMembers.map(member => ({
       ...member,
       gymTime: Math.floor(Math.random() * 101) 
@@ -45,8 +45,8 @@ const Home = (props) => {
 
   return (
     <div className="mainContainer">
-      <div className="titleContainer">
-        <div>Sistem de Gerenciamento de Academia</div>
+      <div className="titleContainerHome">
+        <div> Gerenciamento da Academia</div>
       </div>
       <div>
         {loggedIn && <div>Bem vindo, {email}!</div>}

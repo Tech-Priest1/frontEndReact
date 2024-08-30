@@ -15,6 +15,16 @@
   justify-content: center;
 }
 
+.titleContainerHome {
+  display: flex;
+  flex-direction: column;
+  font-size: 64px;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
 .resultContainer,
 .historyItem {
   flex-direction: row;
@@ -63,17 +73,18 @@
 }
 
 .membrosContainer {
-  max-height: 400px; /* Adjust based on the desired height */
+  max-height: 400px; 
   overflow-y: auto;
-  border: 1px solid #ccc; /* Optional: adds a border to the container */
+  border: 1px solid #ccc; 
   padding: 20px;
+  margin-top: 100px;
   position: relative;
 }
 
 .membrosTitulo {
   position: sticky;
   top: 0;
-  background-color: rgb(225, 225, 225); /* Ensure the header has a background */
+  background-color: rgb(225, 225, 225); /* cor de fundo do header */
   padding: 20px;
   padding-left: 50px;
   margin: 0;
@@ -89,7 +100,7 @@
 
 .memberItem {
   padding: 10px;
-  border-bottom: 1px solid #ddd; /* Optional: adds a bottom border to each item */
+  border-bottom: 1px solid #ddd; 
 }
 
 .separador{
@@ -98,9 +109,9 @@
 }
 
 .modalityContainer {
-  max-height: 1000px; /* Adjust based on the desired height */
+  max-height: 1000px; 
   overflow-y: auto;
-  border: 1px solid #ccc; /* Optional: adds a border to the container */
+  border: 1px solid #ccc; 
   padding: 50px;
   margin-right: -50px;
   position: relative;
@@ -122,13 +133,13 @@
   padding: 300px;
   margin: -130px;
   margin-left: 400px;
-  flex-grow: 1; /* Allows the list to take available space */
+  flex-grow: 1; 
   overflow-y: auto;
 }
 
 .modalityItem {
   padding: 10px;
-  border-bottom: 1px solid #ddd; /* Optional: adds a bottom border to each item */
+  border-bottom: 1px solid #ddd; 
 }
 
 .fixedBottom {
@@ -137,7 +148,7 @@
   background-color: white;
   padding: 10px;
   z-index: 10;
-  box-shadow: 0px -2px 5px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow to separate the fixed bottom */
+  box-shadow: 0px -2px 5px rgba(0,0,0,0.1); /* sombra para separar bottom*/
 }
 
 .inputBoxModality {
@@ -145,7 +156,7 @@
   width: 50%;
   padding-left: 375px;
   margin-left: 400px;
-  margin-bottom: 10px; /* Adds spacing between the input and buttons */ 
+  margin-bottom: 10px; 
   font-size: large;
   border-radius: 8px;
   border: 1px solid grey;
@@ -158,37 +169,41 @@
   justify-content: space-between;
 }
 .userContainer {
-  max-height: 1000px; /* Adjust based on the desired height */
+  max-height: 1000px; 
   overflow-y: auto;
-  border: 1px solid #ccc; /* Optional: adds a border to the container */
-  padding: 50px;
-  margin-right: -50px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-right: auto; 
+  margin-left: auto; 
+  max-width: 1200px; 
   position: relative;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .userTitulo {
   position: sticky;
   padding: 0;
   font-size: 3rem;
-  margin-left: 700px;
+  text-align: center;
   z-index: 10;
 }
 
 .userList {
   list-style-type: none;
   font-size: 1.2rem;
-  padding: 300px;
-  margin: -130px;
-  margin-left: 400px;
-  flex-grow: 1; /* Allows the list to take available space */
+  padding: 0;
+  margin: 20px 0;
+  padding-left: 380px ;
+  flex-grow: 1;
   overflow-y: auto;
+  width: 100%;
 }
 
 .userItem {
   padding: 10px;
-  border-bottom: 1px solid #ddd; /* Optional: adds a bottom border to each item */
+  border-bottom: 1px solid #ddd;
 }
 
 .fixedBottom {
@@ -197,31 +212,29 @@
   background-color: white;
   padding: 10px;
   z-index: 10;
-  box-shadow: 0px -2px 5px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow to separate the fixed bottom */
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .inputBoxUser {
   height: 48px;
-  width: 50%;
-  padding-left: 375px;
-  margin-left: 400px;
-  margin-bottom: 10px; /* Adds spacing between the input and buttons */ 
+  width: 100%;
+  margin-bottom: 10px; 
+  padding-left: 500px;
   font-size: large;
   border-radius: 8px;
   border: 1px solid grey;
+  box-sizing: border-box;
 }
-.separadorUser1 {
-  
+
+.separadorUser1{
   display: flex;
-  padding-left: -30px;
-  padding-right: 600px;
   justify-content: space-between;
+  padding: 0 10px; 
+  margin-right: 820px;
 }
 
 .separadorUser2 {
-  
   display: flex;
-  padding-left: 350px;
-  padding-right: 515px;
   justify-content: space-between;
+  padding: 0 10px; 
 }
