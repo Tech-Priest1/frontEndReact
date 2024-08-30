@@ -24,6 +24,10 @@ const Home = (props) => {
   const handleRegister = () => {
     navigate('/RegisterMember');
   };
+  const handleUsers = () => {
+    navigate('/editUsers');
+  };
+
 
   const handleDelete = (id) => {
     const updatedMembers = members.filter(member => member.id !== id);
@@ -59,6 +63,7 @@ const Home = (props) => {
       {loggedIn && (
         <div>
           <div className="buttonContainer">
+            <input className="inputButton" type="button" onClick={handleUsers} value="Gerenciar Usuários" />  
             <input className="inputButton" type="button" onClick={handleRegister} value="Registrar Membros" />
             <input className="inputButton" type="button" onClick={editGymTypes} value="Gerenciar Modalidades" />
             <input className="inputButton" type="button" onClick={handleLogout} value="Log Out" />

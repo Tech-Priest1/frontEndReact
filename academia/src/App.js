@@ -5,7 +5,8 @@ import EditModality from './home/editModality'
 import Register from './login/register'
 import RegisterMember from './member/registerMember'
 import EditMember from './member/editMember'
-import ProtectedRoute from './login/protectedRoute';
+import EditUsers from './home/editUsers'
+import ProtectedRoute from './login/protectedRoute'
 import './App.css'
 import { useState, useEffect } from 'react'
 
@@ -62,6 +63,9 @@ function App() {
            <Route 
           path="/editModality" 
           element={<ProtectedRoute loggedIn={loggedIn}><EditModality /></ProtectedRoute>} />
+          <Route 
+          path="/editUsers" 
+          element={<ProtectedRoute loggedIn={loggedIn}><editUsers /></ProtectedRoute>} />
           <Route 
             path="*" 
             element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} 
