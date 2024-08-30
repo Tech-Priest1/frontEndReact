@@ -58,9 +58,9 @@ const Home = (props) => {
         )}
       </div>
       {loggedIn && (
-        <div className="membrosContainer">
-          <h3 className="membrosTitulo">Membros da Academia</h3>
-          <ul className="membrosList">
+        <div className="memberContainer">
+          <h3 className="memberTitulo">Membros da Academia</h3>
+          <ul className="memberList">
             {members.map((member) => (
               <li key={member.id} className="memberItem">
                 <b>Id:</b> {member.id} <b>Nome:</b> {member.name} / <b>Tempo de Academia:</b> {member.gymTime} Dias
