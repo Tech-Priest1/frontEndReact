@@ -90,13 +90,13 @@ const Login = (props) => {
       <br />
       <div className="separador">
         <button
-          className='inputButton'
+          className='submitButton'
           type="submitLogin"
           onClick={onButtonClick}>
           Log in
           </button>
           <button
-          className='inputButton'
+          className='submitButton'
           type="submitLogin"
           onClick={onRegisterClick}>
           Criar conta

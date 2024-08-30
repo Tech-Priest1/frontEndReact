@@ -1,0 +1,41 @@
+/* Navbar.css */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 10px;
+  display: flex;
+ 
+  z-index: 1000; /* Ensures navbar is on top of other elements */
+  background-color: #000000;
+  padding: 10px;
+}
+
+.navbar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 10px;
+}
+
+input[type='button'] {
+  border: none;
+  background: rgb(0, 0, 0);
+  color: white;
+  padding: 10px 20px;
+  margin: 8px;
+  font-size: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+input[type="button"]:hover{
+  background-color: lightblue;
+  color: black;
+  cursor: pointer;
+}
+

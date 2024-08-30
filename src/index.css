@@ -62,6 +62,8 @@ button[type='submit'] {
   cursor: pointer;
   display:flex;
 }
+
+
 button[type='submitHome'] {
   border: none;
   background: cornflowerblue;

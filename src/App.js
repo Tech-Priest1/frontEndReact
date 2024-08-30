@@ -7,6 +7,7 @@ import RegisterMember from './member/registerMember';
 import EditMember from './member/editMember';
 import EditUsers from './home/editUsers'; 
 import ProtectedRoute from './login/protectedRoute';
+import Navbar from './navBar/navBar';
 import './App.css';
 import { useState, useEffect } from 'react';
 
@@ -38,6 +39,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        {loggedIn && <Navbar handleLogout={() => setLoggedIn(false)} />}
         <Routes>
           <Route
             path="/"
