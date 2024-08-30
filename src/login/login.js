@@ -65,7 +65,7 @@ const Login = (props) => {
   return (
     <div className='mainContainer'>
       <div className='titleContainer'>
-        <div>Login Academia</div>
+        <div>Academia Unifit</div>
       </div>
       <div className='inputContainer'>
         <input
