@@ -108,7 +108,7 @@ const EditModality = () => {
   {gymTypes.map((gymType, index) => (
     <li key={index} className="modalityItem">
       <div className="modalityText">
-        {gymType.name} - Normal: {gymType.normalPrice} - Promocional: {gymType.promotionalPrice} - Dias de Treino: {gymType.trainingDays} - Tipo: {gymType.modalityType} - Hora: {gymType.trainingTime}
+        {gymType.name} / <b>Normal:</b> {gymType.normalPrice} - <b>Promocional:</b> {gymType.promotionalPrice} - <b>Dias de Treino:</b> {gymType.trainingDays} - <b>Tipo:</b> {gymType.modalityType} - <b>Hora:</b> {gymType.trainingTime}
       </div>
       <div className="separadorModality">
         <button type="button" className="inputButton" onClick={() => handleEditModality(index)}>Editar</button>

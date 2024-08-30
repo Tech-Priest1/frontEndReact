@@ -7,7 +7,6 @@ const EditMember = () => {
   const [gymType, setGymType] = useState('');
   const [price, setPrice] = useState('');
   const [gymTypes, setGymTypes] = useState([]);
-  const [message, setMessage] = useState('');
   const [payingTime, setPayingTime] = useState(''); 
   const navigate = useNavigate();
 
@@ -44,10 +43,10 @@ const EditMember = () => {
       const daysSincePayingTime = calculateDaysSincePayingTime(payingTime);
       if (daysSincePayingTime > 30) {
         setPrice(selectedGymTypeObj.promotionalPrice);
-        setMessage(`Esse usuário está elegível ao preço promocional / Dias de academia: ${daysSincePayingTime}.`);
+        alert(`Esse usuário está elegível ao preço promocional / Dias de academia: ${daysSincePayingTime}.`);
       } else {
         setPrice(selectedGymTypeObj.normalPrice);
-        setMessage(`Esse usuário não está elegível ao preço promocional / Dias de academia: ${daysSincePayingTime}. Mínimo: 30 dias.`);
+        alert(`Esse usuário não está elegível ao preço promocional / Dias de academia: ${daysSincePayingTime}. Mínimo: 30 dias.`);
       }
     }
   };
@@ -132,12 +131,9 @@ const EditMember = () => {
           />
         </div>
         <br />
-        <div className="memberContainerMessage">
-          {message && <p>{message}</p>} {/* local aviso de promoção*/}
-        </div>
         <div className="separador">
           <button type="submit" className='inputButton'>Atualizar</button>
-          <button type="submit" className='inputButton' onClick={onCancelClick}>Cancelar</button>
+          <button type="button" className='inputButton' onClick={onCancelClick}>Cancelar</button>
         </div>
       </form>
     </div>
