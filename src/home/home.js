@@ -49,7 +49,7 @@ const Home = (props) => {
         {loggedIn && <div>Bem-vindo, {email}!</div>}
         {!loggedIn && (
           <div>
-            <div>Faça login para gerenciar a Academia.</div>
+            <div className='homeLoginText'>Faça login para gerenciar a Academia.</div>
             <div className="separador">
               <button type="button" className='inputButton' onClick={() => navigate('/login')}>Login</button>
               <button type="button" className='inputButton' onClick={() => navigate('/register')}>Registrar</button>

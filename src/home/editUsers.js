@@ -25,6 +25,16 @@ const EditModality = () => {
   };
 
   const handleSaveUser = () => {
+    // Validação
+    if (editedPassword.length < 5) {
+      alert('Senha precisa de no mínimo 5 caracteres.');
+      return;
+    }
+    if (editedCpf.length !== 11) {
+      alert('CPF precisa conter 11 números.');
+      return;
+    }
+
     if (editingUserIndex !== null) {
       const updatedUsers = [...users];
       updatedUsers[editingUserIndex] = {
@@ -45,9 +55,11 @@ const EditModality = () => {
     setUsers(updatedUsers);
     localStorage.setItem('users', JSON.stringify(updatedUsers));
   };
-const handleAdicionar =() =>{
+
+  const handleAdicionar = () => {
     navigate('/register');
- }
+  };
+
   const handleCancel = () => {
     navigate('/');
   };
@@ -59,11 +71,11 @@ const handleAdicionar =() =>{
       </div>
       <ul className="userList">
         {users.map((user, index) => (
-          <li key={index}> 
+          <li key={index}>
             {user.name} <b>/</b> {user.email} <b>/</b> {user.cpf}
             <div className="separadorUser1">
-            <button type="submit" className="inputButton" onClick={() => handleEditUser(index)}>Edit</button>
-            <button type="submit" className="inputButton" onClick={() => handleDeleteUser(index)}>Delete</button>
+              <button type="button" className="inputButton" onClick={() => handleEditUser(index)}>Edit</button>
+              <button type="button" className="inputButton" onClick={() => handleDeleteUser(index)}>Delete</button>
             </div>
           </li>
         ))}
@@ -100,16 +112,15 @@ const handleAdicionar =() =>{
             className="inputBoxUser"
           />
           <div className="separadorUser2">
-            <button  type="submit" className="inputButton" onClick={handleSaveUser}>Salvar</button>
-            <button type="submit" className="inputButton" onClick={() => setEditingUserIndex(null)}>Cancelar</button>
+            <button type="button" className="inputButton" onClick={handleSaveUser}>Salvar</button>
+            <button type="button" className="inputButton" onClick={() => setEditingUserIndex(null)}>Cancelar</button>
           </div>
         </div>
       )}
 
       <div className="fixedBottom separador">
-        <button type="submit" className="inputButton" onClick={handleAdicionar}>Adicionar</button>
-        <button type="submit" className="inputButton" onClick={handleCancel}>Cancelar</button>
-        
+        <button type="button" className="inputButton" onClick={handleAdicionar}>Adicionar</button>
+        <button type="button" className="inputButton" onClick={handleCancel}>Cancelar</button>
       </div>
     </div>
   );

@@ -9,19 +9,18 @@
 .titleContainer {
   display: flex;
   flex-direction: column;
-  font-size: 60px;
+  font-size: 60rem;
   font-weight: bolder;
   align-items: center;
   justify-content: center;
   margin-top: -50px;
   
 }
+
 .mensageEditMembers{ 
   padding-top: 20px;
   margin-left: -100px;
  
-  
-
  
 }
 .titleContainerHome {
@@ -32,6 +31,16 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+}
+.homeLoginText{
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding-left: 30px;
 }
 
 .resultContainer,
@@ -148,12 +157,19 @@
   list-style-type: none;
   font-size: 1.2rem;
   padding: 0;
-  padding-left: 400px;
+  padding-left: 0px;
   margin: 20px 0;
   flex-grow: 1;
   overflow-y: auto;
   width: 100%;
 }
+
+.modalityText {
+  flex: 1; /* Takes up remaining space */
+  margin-right: 20px; /* Space between text and buttons */
+  padding: 0px;
+}
+
 
 .modalityItem {
   padding: 10px;
