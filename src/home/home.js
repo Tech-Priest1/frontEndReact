@@ -43,13 +43,13 @@ const Home = (props) => {
     <div className="mainContainer">
       <Navbar handleLogout={handleLogout} />
       <div className="titleContainerHome">
-        <div>Gerenciamento da Academia</div>
+        <div>Gerenciador de Academia</div>
       </div>
       <div>
         {loggedIn && <div>Bem-vindo, {email}!</div>}
         {!loggedIn && (
           <div>
-            <div className='homeLoginText'>Faça login para gerenciar a Academia.</div>
+            <div className='homeLoginText'>Faça login para começar</div>
             <div className="separador">
               <button type="button" className='inputButton' onClick={() => navigate('/login')}>Login</button>
               <button type="button" className='inputButton' onClick={() => navigate('/register')}>Registrar</button>
