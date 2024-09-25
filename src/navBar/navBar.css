@@ -1,24 +1,25 @@
-/* Navbar.css */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #f0f0f0;
-  padding: 10px;
-  display: flex;
- 
-  z-index: 1000; /* Ensures navbar is on top of other elements */
   background-color: #000000;
   padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
 }
 
-.navbar-menu {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.navbar-buttons {
   display: flex;
   gap: 10px;
+}
+
+.navbar-email {
+  color: white;
+  font-size: 16px;
+  padding-right: 20px; 
 }
 
 input[type='button'] {
@@ -30,7 +31,6 @@ input[type='button'] {
   font-size: 20px;
   border-radius: 8px;
   cursor: pointer;
-  border: none;
 }
 
 input[type="button"]:hover{
@@ -39,3 +39,9 @@ input[type="button"]:hover{
   cursor: pointer;
 }
 
+.avatar {
+  width: 40px; 
+  height: 40px; 
+  border-radius: 50%; 
+  margin-right: 10px; 
+}

@@ -1,66 +1,61 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-
-
-
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [emailError, setEmailError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const DEFAULT_AVATAR_URL = '../public/avatar.png';
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onButtonClick = () => {
-    setEmailError('')
-    setPasswordError('')
-    // eslint-disable-next-line 
-    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-    
+    setEmailError('');
+    setPasswordError('');
+    // eslint-disable-next-line
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
     if (email === '') {
-      setEmailError('Digite um email')
-      return
+      setEmailError('Digite um email');
+      return;
     }
 
     if (!emailRegex.test(email)) {
-      setEmailError('Digite um email válido')
-      return
+      setEmailError('Digite um email válido');
+      return;
     }
 
     if (password === '') {
-      setPasswordError('Digite uma senha')
-      return
+      setPasswordError('Digite uma senha');
+      return;
     }
 
     if (password.length < 5) {
-      setPasswordError('A senha precisa ter 5 ou mais caracteres')
-      return
+      setPasswordError('A senha precisa ter 5 ou mais caracteres');
+      return;
     }
 
-    const users = JSON.parse(localStorage.getItem('users')) || []
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(user => user.email === email && user.password === password);
 
- 
-  const user = users.find(user => user.email === email && user.password === password)
+    if (user) {
+      console.log('Login successful!');
+      props.setLoggedIn(true);
+      props.setEmail(user.email);
+      
+      if (typeof props.setAvatar === 'function') {
+        props.setAvatar(user.avatar ? user.avatar : DEFAULT_AVATAR_URL);
+      }
+      navigate('/');
+    } else {
+      setPasswordError('Email ou senha inválidos');
+    }
+  };
 
-  if (user) {
-   
-    console.log('Login successful!')
-    
-    props.setLoggedIn(true)
-    props.setEmail(user.email)
-    
-    navigate('/')
-  } else {
-   
-    setPasswordError('Email ou senha inválidos')
-  }
- 
-  }
   const onRegisterClick = () => {
-    navigate('/register')
-  }
-
+    navigate('/register');
+  };
 
   return (
     <div className='mainContainer'>
@@ -94,16 +89,16 @@ const Login = (props) => {
           type="submitLogin"
           onClick={onButtonClick}>
           Log in
-          </button>
-          <button
+        </button>
+        <button
           className='submitButton'
           type="submitLogin"
           onClick={onRegisterClick}>
           Criar conta
-          </button>
+        </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

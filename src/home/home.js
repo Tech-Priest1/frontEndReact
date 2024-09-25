@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../navBar/navBar'; 
 
 const Home = (props) => {
-  const { loggedIn, email, setLoggedIn } = props;
+  const { loggedIn, email, avatar, setLoggedIn } = props; // Added avatar here
   const navigate = useNavigate();
   const [members, setMembers] = useState([]);
 
@@ -14,7 +14,7 @@ const Home = (props) => {
       const payingTime = new Date(member.payingTime);
       const currentTime = new Date();
       const timeDifference = Math.abs(currentTime - payingTime);
-      const gymTime = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // calcula os dias baseado na data de pagamento
+      const gymTime = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // calculates days based on payment date
       return {
         ...member,
         gymTime,
@@ -41,12 +41,11 @@ const Home = (props) => {
 
   return (
     <div className="mainContainer">
-      <Navbar handleLogout={handleLogout} />
+      <Navbar handleLogout={handleLogout} email={email} avatar={avatar} loggedIn={loggedIn} /> {/* Pass avatar */}
       <div className="titleContainerHome">
         <div>Gerenciador de Academia</div>
       </div>
       <div>
-        {loggedIn && <div>Bem-vindo, {email}!</div>}
         {!loggedIn && (
           <div>
             <div className='homeLoginText'>Faça login para começar</div>
@@ -58,19 +57,21 @@ const Home = (props) => {
         )}
       </div>
       {loggedIn && (
-        <div className="memberContainer">
-          <h3 className="memberTitulo">Membros da Academia</h3>
-          <ul className="memberList">
-            {members.map((member) => (
-              <li key={member.id} className="memberItem">
-                <b>Id:</b> {member.id} <b>Nome:</b> {member.name} / <b>Tempo de Academia:</b> {member.gymTime} Dias
-                <div className="separador">
-                  <button type="button" onClick={() => handleEdit(member.id)}>Edit</button>
-                  <button type="button" onClick={() => handleDelete(member.id)}>Delete</button>
-                </div>
-              </li>
-            ))}
-          </ul>
+        <div>
+          <div className="memberContainer">
+            <h3 className="memberTitulo">Membros da Academia</h3>
+            <ul className="memberList">
+              {members.map((member) => (
+                <li key={member.id} className="memberItem">
+                  <b>Id:</b> {member.id} <b>Nome:</b> {member.name} / <b>Tempo de Academia:</b> {member.gymTime} Dias
+                  <div className="separador">
+                    <button type="button" onClick={() => handleEdit(member.id)}>Edit</button>
+                    <button type="button" onClick={() => handleDelete(member.id)}>Delete</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
     </div>
