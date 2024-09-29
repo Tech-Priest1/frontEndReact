@@ -7,13 +7,13 @@ const Login = (props) => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const DEFAULT_AVATAR_URL = '../public/avatar.png';
-
   const navigate = useNavigate();
 
-  const onButtonClick = () => {
+  const onButtonClick = async () => {
     setEmailError('');
     setPasswordError('');
-    // eslint-disable-next-line
+    
+    // eslint-disable-next-line 
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
     if (email === '') {
@@ -36,20 +36,45 @@ const Login = (props) => {
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const user = users.find(user => user.email === email && user.password === password);
+    try {
+      const response = await fetch('http://localhost:5000/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (user) {
-      console.log('Login successful!');
-      props.setLoggedIn(true);
-      props.setEmail(user.email);
-      
-      if (typeof props.setAvatar === 'function') {
-        props.setAvatar(user.avatar ? user.avatar : DEFAULT_AVATAR_URL);
+      const contentType = response.headers.get('Content-Type');
+      console.log('Content-Type:', contentType);
+
+      if (contentType && contentType.includes('application/json')) {
+        const data = await response.json();
+
+        if (response.ok) {
+          console.log('Login successful!');
+          props.setLoggedIn(true);
+          props.setEmail(data.email);
+
+          
+          localStorage.setItem('token', data.token); 
+          console.log('Token stored:', localStorage.getItem('token')); 
+
+
+          
+          if (typeof props.setAvatar === 'function') {
+            props.setAvatar(data.avatar || DEFAULT_AVATAR_URL);
+          }
+          navigate('/');
+        } else {
+          setPasswordError(data.message || 'Email ou senha inválidos');
+        }
+      } else {
+        throw new Error('Invalid content-type, expected application/json');
       }
-      navigate('/');
-    } else {
-      setPasswordError('Email ou senha inválidos');
+    } catch (error) {
+      console.error('Login error:', error);
+      setPasswordError('Erro ao realizar login. Tente novamente mais tarde.');
     }
   };
 
@@ -86,19 +111,19 @@ const Login = (props) => {
       <div className="separador">
         <button
           className='submitButton'
-          type="submitLogin"
+          type="button"
           onClick={onButtonClick}>
           Log in
         </button>
         <button
           className='submitButton'
-          type="submitLogin"
+          type="button"
           onClick={onRegisterClick}>
           Criar conta
         </button>
       </div>
     </div>
   );
-}
+};
 
 export default Login;

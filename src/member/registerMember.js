@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const RegisterMember = () => {
   const [name, setName] = useState('');
-  const [cpf, setcpf] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [number, setNumber] = useState('');
   const [gymType, setGymType] = useState('');
   const [price, setPrice] = useState('');
   const [priceType, setPriceType] = useState('normal'); 
-  const [payingTime, setPayingTime] = useState(''); // New state for paying time
+  const [payingTime, setPayingTime] = useState('');
+  const [password, setPassword] = useState(''); // Added password state
   const [gymTypes, setGymTypes] = useState([]);
   const navigate = useNavigate();
 
+  // Fetch gym types from MongoDB on component mount
   useEffect(() => {
-    const storedGymTypes = JSON.parse(localStorage.getItem('gymTypes')) || [];
-    setGymTypes(storedGymTypes);
+    const fetchGymTypes = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/gym/'); // Adjust route if necessary
+        setGymTypes(response.data);
+      } catch (error) {
+        console.error("Error fetching gym types:", error);
+      }
+    };
+    fetchGymTypes();
   }, []);
 
   useEffect(() => {
@@ -29,26 +40,29 @@ const RegisterMember = () => {
     navigate('/');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const members = JSON.parse(localStorage.getItem('members')) || [];
+    // Prepare the data to send
+    const memberData = {
+      name,
+      cpf,
+      number,
+      gymType,
+      price,
+      payingTime,
+      password, // Include password in the request
+    };
 
-    const existingMember = members.find(member => member.cpf === cpf);
-    if (existingMember) {
-      alert('Membro já existe!');
-      return;
+    try {
+      // Send POST request to save the member in the database
+      await axios.post('http://localhost:5000/api/member/register', memberData); // Adjust route if necessary
+      navigate('/'); // Redirect after successful registration
+    } catch (error) {
+      console.error("Error ao registrar membro:", error);
+      alert('Erro ao registrar membro!');
     }
-
-    const lastMember = members[members.length - 1];
-    const id = lastMember ? lastMember.id + 1 : 1;
-
-    
-    members.push({ id, name, cpf, gymType, price, payingTime });
-    localStorage.setItem('members', JSON.stringify(members));
-
-    navigate('/');
-  };
+};
 
   return (
     <div className="mainContainer">
@@ -72,11 +86,35 @@ const RegisterMember = () => {
             type="text"
             placeholder="CPF"
             value={cpf}
-            onChange={(e) => setcpf(e.target.value)}
+            onChange={(e) => setCpf(e.target.value)}
             className='inputBox'
             required
             minLength={11}
             maxLength={11}
+          />
+        </div>
+        <br />
+        <div>
+          <input
+            type="text"
+            placeholder="Número"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            className='inputBox'
+            required
+            minLength={9}
+            maxLength={11}
+          />
+        </div>
+        <br />
+        <div>
+          <input
+            type="password" 
+            placeholder="Senha" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className='inputBox'
+            required
           />
         </div>
         <br />
@@ -111,7 +149,6 @@ const RegisterMember = () => {
             type="text"
             placeholder="Valor"
             value={price}
-            onChange={(e) => setPrice(e.target.value)}
             className='inputBox'
             required
             readOnly
@@ -123,7 +160,7 @@ const RegisterMember = () => {
             type="date"
             placeholder="Data de Pagamento"
             value={payingTime}
-            onChange={(e) => setPayingTime(e.target.value)} // data do pagamento
+            onChange={(e) => setPayingTime(e.target.value)}
             className='inputBox'
             required
           />

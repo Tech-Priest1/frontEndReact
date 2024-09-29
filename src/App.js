@@ -14,7 +14,7 @@ import { useState, useEffect } from 'react';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
-  const [avatar, setAvatar] = useState('../public/avatar.png'); // Set a default avatar
+  const [avatar, setAvatar] = useState('/avatar.png'); // Corrected the default avatar path
 
   useEffect(() => {
     const initialGymTypes = [
@@ -36,22 +36,18 @@ function App() {
   const handleLogout = () => {
     setLoggedIn(false);
     setEmail('');  // Clear email
-    setAvatar('../public/avatar.png'); // Reset to default avatar
+    setAvatar('/avatar.png'); // Reset to default avatar
   };
-
-  // Debugging log to check the App's state
-  console.log('App State:', { loggedIn, email, avatar });
 
   return (
     <div className="App">
       <BrowserRouter>
-        {/* Always render Navbar */}
         <Navbar 
           handleLogout={handleLogout} 
           email={email} 
           avatar={avatar} 
           updateAvatar={updateAvatar} 
-          loggedIn={loggedIn} // Use loggedIn state directly
+          loggedIn={loggedIn} 
         />
         
         <Routes>
@@ -88,7 +84,6 @@ function App() {
             element={<Home email={email} loggedIn={loggedIn} avatar={avatar} setLoggedIn={setLoggedIn} />}
           />
         </Routes>
-       
       </BrowserRouter>
     </div>
   );

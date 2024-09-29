@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Axios for API requests
+import { jwtDecode } from 'jwt-decode';
+
+
 import './editModality.css';
 
 const EditModality = () => {
@@ -9,8 +13,10 @@ const EditModality = () => {
   const [promotionalPrice, setPromotionalPrice] = useState('');
   const [trainingDays, setTrainingDays] = useState(''); 
   const [modalityType, setModalityType] = useState(''); 
+  const [initialTime, setInitialTime] = useState('');
+  const [endTime, setEndTime] = useState('');
   const [trainingTime, setTrainingTime] = useState(''); 
-  
+
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedName, setEditedName] = useState('');
   const [editedNormalPrice, setEditedNormalPrice] = useState('');
@@ -20,39 +26,90 @@ const EditModality = () => {
   const [editedTrainingTime, setEditedTrainingTime] = useState(''); 
   const navigate = useNavigate();
 
+
   useEffect(() => {
-    const storedGymTypes = JSON.parse(localStorage.getItem('gymTypes')) || [];
-    setGymTypes(storedGymTypes);
+    if (initialTime && endTime) {
+      setTrainingTime(`${initialTime} - ${endTime}`);
+    }
+  }, [initialTime, endTime]);
+  
+  useEffect(() => {
+    if (editingIndex !== null && initialTime && endTime) {
+      setEditedTrainingTime(`${initialTime} - ${endTime}`);
+    }
+  }, [initialTime, endTime, editingIndex]);
+  
+  useEffect(() => {
+    const fetchGymTypes = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/gym', {
+          headers: {
+            Authorization: `Bearer ${token}` // autorizar com token
+          }
+        });
+        setGymTypes(response.data);
+      } catch (error) {
+        alert('Erro ao carregar tipos de academia.');
+      }
+    };
+    fetchGymTypes();
   }, []);
 
-  const handleAddGymType = () => {
+  const handleAddGymType = async () => {
     if (newGymType.trim() && normalPrice.trim() && promotionalPrice.trim() && trainingDays.trim() && modalityType.trim() && trainingTime.trim()) {
-      const updatedGymTypes = [
-        ...gymTypes,
-        {
+      try {
+        const token = localStorage.getItem('token'); 
+        console.log('Token:', token); 
+        const decodedToken = jwtDecode(token);
+        const adminId = decodedToken.id;
+  
+        const newGymTypeData = {
           name: newGymType,
           normalPrice: parseFloat(normalPrice),
           promotionalPrice: parseFloat(promotionalPrice),
           trainingDays, 
           modalityType,
           trainingTime,
-        },
-      ];
-      setGymTypes(updatedGymTypes);
-      localStorage.setItem('gymTypes', JSON.stringify(updatedGymTypes));
-      setNewGymType('');
-      setNormalPrice('');
-      setPromotionalPrice('');
-      setTrainingDays(''); 
-      setModalityType(''); 
-      setTrainingTime(''); 
+          admin: adminId 
+        };
+  
+        // Send the request to your backend with the token in headers
+        await axios.post('http://localhost:5000/api/gym', newGymTypeData, {
+          headers: {
+            Authorization: `Bearer ${token}` // Pass token in the Authorization header
+          }
+        });
+  
+        // Fetch the updated gym types
+        const response = await axios.get('http://localhost:5000/api/gym', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setGymTypes(response.data);
+      } catch (error) {
+        console.error('Error ao adicionar modalidade:', error);
+        alert('Erro ao adicionar tipo de academia.');
+      }
     }
   };
+  
 
-  const handleDeleteGymType = (index) => {
-    const updatedGymTypes = gymTypes.filter((_, i) => i !== index);
-    setGymTypes(updatedGymTypes);
-    localStorage.setItem('gymTypes', JSON.stringify(updatedGymTypes));
+  const handleDeleteGymType = async (index) => {
+    const gymTypeId = gymTypes[index]._id;
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`http://localhost:5000/api/gym/${gymTypeId}`, {
+        headers: {
+          Authorization: `Bearer ${token}` // Pass token in the Authorization header
+        }
+      });
+      const updatedGymTypes = gymTypes.filter((_, i) => i !== index);
+      setGymTypes(updatedGymTypes);
+    } catch (error) {
+      alert('Erro ao deletar tipo de academia.');
+    }
   };
 
   const handleEditModality = (index) => {
@@ -66,26 +123,39 @@ const EditModality = () => {
     setEditedTrainingTime(gymType.trainingTime);
   };
 
-  const handleSaveModality = () => {
+  const handleSaveModality = async () => {
     if (editingIndex !== null) {
-      const updatedGymTypes = [...gymTypes];
-      updatedGymTypes[editingIndex] = {
+      const gymTypeId = gymTypes[editingIndex]._id;
+      const updatedGymTypeData = {
         name: editedName,
         normalPrice: parseFloat(editedNormalPrice),
         promotionalPrice: parseFloat(editedPromotionalPrice),
         trainingDays: editedTrainingDays,
         modalityType: editedModalityType,
-        trainingTime: editedTrainingTime,
+        trainingTime: editedTrainingTime
       };
-      setGymTypes(updatedGymTypes);
-      localStorage.setItem('gymTypes', JSON.stringify(updatedGymTypes));
-      setEditingIndex(null);
-      setEditedName('');
-      setEditedNormalPrice('');
-      setEditedPromotionalPrice('');
-      setEditedTrainingDays('');
-      setEditedModalityType('');
-      setEditedTrainingTime('');
+
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.put(`http://localhost:5000/api/gym/${gymTypeId}`, updatedGymTypeData, {
+          headers: {
+            Authorization: `Bearer ${token}` // Pass token in the Authorization header
+          }
+        });
+
+        const updatedGymTypes = [...gymTypes];
+        updatedGymTypes[editingIndex] = response.data;
+        setGymTypes(updatedGymTypes);
+        setEditingIndex(null);
+        setEditedName('');
+        setEditedNormalPrice('');
+        setEditedPromotionalPrice('');
+        setEditedTrainingDays('');
+        setEditedModalityType('');
+        setEditedTrainingTime('');
+      } catch (error) {
+        alert('Erro ao atualizar tipo de academia.');
+      }
     }
   };
 
@@ -99,28 +169,27 @@ const EditModality = () => {
     setTrainingTime(''); 
     navigate('/');
   };
-
   return (
     <div className="modalityContainer">
       <div>
         <h3 className="modalityTitulo">Editar Tipos de Inscrição</h3>
       </div>
       <ul className="modalityList">
-  {gymTypes.map((gymType, index) => (
-    <li key={index} className="modalityItem">
-      <div className="modalityText">
-        {gymType.name} / <b>Normal:</b> {gymType.normalPrice} - <b>Promocional:</b> {gymType.promotionalPrice} - <b>Dias de Treino:</b> {gymType.trainingDays} - <b>Tipo:</b> {gymType.modalityType} - <b>Hora:</b> {gymType.trainingTime}
-      </div>
-      <div className="separadorModality">
-        <button type="button" className="inputButton" onClick={() => handleEditModality(index)}>Editar</button>
-        <button type="button" className="inputButton" onClick={() => handleDeleteGymType(index)}>Delete</button>
-      </div>
-    </li>
-  ))}
-</ul>
+        {gymTypes.map((gymType, index) => (
+          <li key={index} className="modalityItem">
+            <div className="modalityText">
+              {gymType.name} / <b>Normal:</b> {gymType.normalPrice} - <b>Promocional:</b> {gymType.promotionalPrice} - <b>Dias de Treino:</b> {gymType.trainingDays} - <b>Tipo:</b> {gymType.modalityType} - <b>Hora:</b> {gymType.trainingTime}
+            </div>
+            <div className="separadorModality">
+              <button type="button" className="inputButton" onClick={() => handleEditModality(index)}>Editar</button>
+              <button type="button" className="inputButton" onClick={() => handleDeleteGymType(index)}>Delete</button>
+            </div>
+          </li>
+        ))}
+      </ul>
 
       <div className="fixedBottom">
-        <input
+      <input
           type="text"
           placeholder={editingIndex !== null ? 'Nome' : 'Nova Modalidade'}
           value={editingIndex !== null ? editedName : newGymType}
@@ -148,20 +217,38 @@ const EditModality = () => {
           onChange={(e) => editingIndex !== null ? setEditedTrainingDays(e.target.value) : setTrainingDays(e.target.value)}
           className="inputBoxModality"
         />
-        <input
-          type="text"
-          placeholder="Tipo de Modalidade"
-          value={editingIndex !== null ? editedModalityType : modalityType}
-          onChange={(e) => editingIndex !== null ? setEditedModalityType(e.target.value) : setModalityType(e.target.value)}
-          className="inputBoxModality"
-        />
-        <input
-          type="time"
-          placeholder="Hora do Treino"
-          value={editingIndex !== null ? editedTrainingTime : trainingTime}
-          onChange={(e) => editingIndex !== null ? setEditedTrainingTime(e.target.value) : setTrainingTime(e.target.value)}
-          className="inputBoxModality"
-        />
+       <select
+    value={editingIndex !== null ? editedModalityType : modalityType}
+    onChange={(e) => editingIndex !== null ? setEditedModalityType(e.target.value) : setModalityType(e.target.value)}
+    className="inputBoxModality"
+>
+    <option value="">Selecione o tipo de modalidade</option>
+    <option value="Artes Marciais">Artes Marciais</option>
+    <option value="Treinamento de força">Treinamento de força</option>
+    <option value="Danças">Danças</option>
+    <option value="Pilates">Pilates</option>
+</select>
+
+<div className="modalityContainer">
+      <input
+        type="time"
+        value={initialTime}
+        onChange={(e) => setInitialTime(e.target.value)}
+        placeholder="Hora Inicial"
+        className="inputBoxModality"
+      />
+      <input
+        type="time"
+        value={endTime}
+        onChange={(e) => setEndTime(e.target.value)}
+        placeholder="Hora Final"
+        className="inputBoxModality"
+      />
+
+      <div>
+        <span>Horário: {trainingTime}</span>
+      </div>
+    </div>
 
         {editingIndex !== null ? (
           <>

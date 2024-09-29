@@ -1,44 +1,52 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [cpf, setCpf] = useState('')
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    setError('')
-    setSuccess('')
+    setError('');
+    setSuccess('');
 
-    const users = JSON.parse(localStorage.getItem('users')) || []
-
-    const existingUser = users.find(user => user.email === email)
-    if (existingUser) {
-      setError('Usuário já existe!')
-      return
+    
+    if (password.length < 5) {
+      setError('A senha deve ter pelo menos 5 caracteres.');
+      return;
+    }
+    if (cpf.length !== 11) {
+      setError('O CPF deve conter exatamente 11 números.');
+      return;
     }
 
-    const id = users.length + 1
-    users.push({ id, name, email, password, cpf })
-    localStorage.setItem('users', JSON.stringify(users))
+    try {
+      
+      const response = await axios.post('http://localhost:5000/api/admin/register', { name, email, password, cpf });
+      setSuccess(response.data.message); 
 
-    setSuccess('Usuário registrado com sucesso!')
-
-    setTimeout(() => {
-      navigate('/login')
-    }, 2000)
-  }
+     
+      setTimeout(() => {
+        navigate('/login');
+      }, 10000);
+    } catch (error) {
+     
+      const errorMessage = error.response?.data?.error || 'Erro ao registrar usuário. Verifique seus dados.';
+      setError(errorMessage);
+    }
+  };
 
   const onLoginClick = () => {
-    navigate('/login')
-  }
+    navigate('/login');
+  };
 
   return (
     <div className='mainContainer'>
@@ -94,19 +102,17 @@ const Register = () => {
             maxLength={11}
           />
         </div>
-        <br/>
-       <div className='separador'>
-        <button type="submitRegister" className='inputButton'>Registrar</button>
-        <button type="submitRegister" onClick={onLoginClick} className='inputButton'>Ir para Login</button>
-      
-      </div>
-      </form> 
-        
+        <br />
+        <div className='separador'>
+          <button type="submit" className='inputButton'>Registrar</button>
+          <button type="button" onClick={onLoginClick} className='inputButton'>Ir para Login</button>
+        </div>
+      </form>
+
       {error && <p className='errorLabel'>{error}</p>}
       {success && <p className='successLabel'>{success}</p>}
-      
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

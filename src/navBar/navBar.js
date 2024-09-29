@@ -5,11 +5,14 @@ import './navBar.css';
 const Navbar = ({ handleLogout, email, avatar, updateAvatar, loggedIn }) => {
   const navigate = useNavigate();
 
+  // Path to the default avatar image in the public folder
+  const defaultAvatar = '/avatar.png'; 
+
   const handleHome = () => {
     navigate('/');
   };
 
-  const handleRegister = () => {
+  const handleRegister = () => {  
     navigate('/registerMember');
   };
 
@@ -39,28 +42,27 @@ const Navbar = ({ handleLogout, email, avatar, updateAvatar, loggedIn }) => {
         <input className="inputButton" type="button" onClick={handleUsers} value="Gerenciar Usuários" />
         <input className="inputButton" type="button" onClick={editGymTypes} value="Gerenciar Modalidades" />
         <input className="inputButton" type="button" onClick={handleRegister} value="Registrar Membros" />
-        {/* Conditionally render the Logout button */}
         {loggedIn && <input className="inputButton" type="button" onClick={handleLogout} value="Sair" />}
       </div>
       <div className="navbar-email">
-        {loggedIn && avatar && (  // Check if loggedIn and avatar exist
+        {loggedIn && (  
           <label>
             <img
-              src={avatar}
+              src={avatar ? avatar : defaultAvatar}  // Use default avatar if none is set
               alt="User Avatar"
               onClick={() => document.getElementById('avatarInput').click()} 
-              className="avatar" // Use CSS class for styling
+              className="avatar" 
             />
             <input
               type="file"
               id="avatarInput"
               accept="image/*"
               onChange={handleAvatarChange}
-              style={{ display: 'none' }} // Hide the file input
+              style={{ display: 'none' }} 
             />
           </label>
         )}
-        {loggedIn && email && <span> {email}</span>} {/* Conditionally render email */}
+        {loggedIn && email && <span> {email}</span>}
       </div>
     </div>
   );

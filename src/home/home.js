@@ -1,39 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../navBar/navBar'; 
+import axios from 'axios';
+import Navbar from '../navBar/navBar';
 
 const Home = (props) => {
-  const { loggedIn, email, avatar, setLoggedIn } = props; // Added avatar here
+  const { loggedIn, email, avatar, setLoggedIn } = props; 
   const navigate = useNavigate();
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    const storedMembers = JSON.parse(localStorage.getItem('members')) || [];
+    const fetchMembers = async () => {
+      if (!loggedIn) return; // Only fetch members if logged in
+      try {
+        const response = await axios.get('http://localhost:5000/api/member'); // Adjust the API route as needed
+        const membersWithGymTime = response.data.map(member => {
+          const payingTime = new Date(member.payingTime);
+          const currentTime = new Date();
+          const timeDifference = Math.abs(currentTime - payingTime);
+          const gymTime = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); 
+          return {
+            ...member,
+            gymTime,
+          };
+        });
+        setMembers(membersWithGymTime);
+      } catch (error) {
+        console.error("Error fetching members:", error);
+      }
+    };
 
-    const membersWithGymTime = storedMembers.map(member => {
-      const payingTime = new Date(member.payingTime);
-      const currentTime = new Date();
-      const timeDifference = Math.abs(currentTime - payingTime);
-      const gymTime = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // calculates days based on payment date
-      return {
-        ...member,
-        gymTime,
-      };
-    });
-
-    setMembers(membersWithGymTime);
-  }, []);
+    fetchMembers();
+  }, [loggedIn]);
 
   const handleLogout = () => {
     setLoggedIn(false);
     navigate('/login');
   };
 
-  const handleDelete = (id) => {
-    const updatedMembers = members.filter(member => member.id !== id);
-    setMembers(updatedMembers);
-    localStorage.setItem('members', JSON.stringify(updatedMembers));
-  };
+  const handleDelete = async (id) => {
+    try {
+        await axios.delete(`http://localhost:5000/api/member/${id}`); // Make sure the ID is correct
+        setMembers(members.filter(member => member._id !== id)); // Update state after deletion
+    } catch (error) {
+        console.error("Error deleting member:", error);
+    }
+};
 
   const handleEdit = (id) => {
     navigate(`/editMember/${id}`);
@@ -41,7 +52,7 @@ const Home = (props) => {
 
   return (
     <div className="mainContainer">
-      <Navbar handleLogout={handleLogout} email={email} avatar={avatar} loggedIn={loggedIn} /> {/* Pass avatar */}
+      <Navbar handleLogout={handleLogout} email={email} avatar={avatar} loggedIn={loggedIn} />
       <div className="titleContainerHome">
         <div>Gerenciador de Academia</div>
       </div>
@@ -62,11 +73,11 @@ const Home = (props) => {
             <h3 className="memberTitulo">Membros da Academia</h3>
             <ul className="memberList">
               {members.map((member) => (
-                <li key={member.id} className="memberItem">
-                  <b>Id:</b> {member.id} <b>Nome:</b> {member.name} / <b>Tempo de Academia:</b> {member.gymTime} Dias
+                <li key={member._id} className="memberItem"> 
+                  <b>Id:</b> {member._id} <b>Nome:</b> {member.name} / <b>Tempo de Academia:</b> {member.gymTime} Dias
                   <div className="separador">
-                    <button type="button" onClick={() => handleEdit(member.id)}>Edit</button>
-                    <button type="button" onClick={() => handleDelete(member.id)}>Delete</button>
+                    <button type="button" onClick={() => handleEdit(member._id)}>Edit</button>
+                    <button type="button" onClick={() => handleDelete(member._id)}>Delete</button>
                   </div>
                 </li>
               ))}

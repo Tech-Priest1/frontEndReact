@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; 
 import './editUsers.css';
 
-const EditModality = () => {
+const EditAdmin = () => {
   const [users, setUsers] = useState([]);
   const [editingUserIndex, setEditingUserIndex] = useState(null);
   const [editedName, setEditedName] = useState('');
@@ -12,8 +13,16 @@ const EditModality = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-    setUsers(storedUsers);
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/admin'); // endereço da rota backend
+        setUsers(response.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
   }, []);
 
   const handleEditUser = (index) => {
@@ -21,12 +30,11 @@ const EditModality = () => {
     setEditingUserIndex(index);
     setEditedName(user.name);
     setEditedEmail(user.email);
-    setEditedPassword(user.password);
+    setEditedPassword(''); 
     setEditedCpf(user.cpf);
   };
 
-  const handleSaveUser = () => {
-    // Validação
+  const handleSaveUser = async () => {
     if (editedPassword.length < 5) {
       alert('Senha precisa de no mínimo 5 caracteres.');
       return;
@@ -37,25 +45,46 @@ const EditModality = () => {
     }
 
     if (editingUserIndex !== null) {
-      const updatedUsers = [...users];
-      updatedUsers[editingUserIndex] = {
-        ...updatedUsers[editingUserIndex],
+      const updatedUser = {
         name: editedName,
         email: editedEmail,
         password: editedPassword,
         cpf: editedCpf,
       };
-      setUsers(updatedUsers);
-      localStorage.setItem('users', JSON.stringify(updatedUsers));
-      setEditingUserIndex(null);
+
+      try {
+        const userId = users[editingUserIndex]._id;
+        const response = await axios.put(`http://localhost:5000/api/admin/${userId}`, updatedUser); 
+    
+       
+        const updatedUsers = [...users];
+        updatedUsers[editingUserIndex] = response.data; 
+        setUsers(updatedUsers);
+    
+        setEditingUserIndex(null);
+    } catch (error) {
+       
+        alert(error.response?.data?.message || 'Erro ao atualizar usuário.');
+    }
+    
     }
   };
 
-  const handleDeleteUser = (index) => {
-    const updatedUsers = users.filter((_, i) => i !== index);
-    setUsers(updatedUsers);
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
+  const handleDeleteUser = async (index) => {
+    const userId = users[index]._id; 
+  
+    try {
+      await axios.delete(`http://localhost:5000/api/admin/${userId}`); //  backend URL
+  
+      
+      const updatedUsers = users.filter((_, i) => i !== index);
+      setUsers(updatedUsers);
+    } catch (error) {
+      
+      alert(error.response?.data?.message || 'Erro ao deletar usuário.');
+    }
   };
+  
 
   const handleAdicionar = () => {
     navigate('/register');
@@ -72,7 +101,7 @@ const EditModality = () => {
       </div>
       <ul className="userList">
         {users.map((user, index) => (
-          <li key={index}>
+          <li key={user._id}> 
             {user.name} <b>/</b> {user.email} <b>/</b> {user.cpf}
             <div className="separadorUser1">
               <button type="button" className="inputButton" onClick={() => handleEditUser(index)}>Edit</button>
@@ -127,4 +156,4 @@ const EditModality = () => {
   );
 };
 
-export default EditModality;
+export default EditAdmin;
