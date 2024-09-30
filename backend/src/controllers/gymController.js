@@ -1,11 +1,11 @@
 const Gym = require("../models/gymType");
 
-
+//criar modalidade
 exports.createGymType = async (req, res) => {
     const { name, normalPrice, promotionalPrice, trainingDays, modalityType, trainingTime, admin } = req.body;
 
     try {
-        // check nos campos
+       
         if (!name || !normalPrice || !promotionalPrice || !trainingDays || !modalityType || !trainingTime || !admin) {
             return res.status(400).json({ error: "Todos os campos são obrigatórios." });
         }
@@ -13,7 +13,7 @@ exports.createGymType = async (req, res) => {
         // debug
         console.log("Creating gym type with data:", req.body);
 
-        // Create and save the new gym type
+       
         const newGymType = new Gym({ 
             name, 
             normalPrice, 
@@ -34,7 +34,7 @@ exports.createGymType = async (req, res) => {
 };
 
 
-
+//editar modalidade
 exports.updateGymType = async (req, res) => {
     const { id } = req.params;
     const {  name, normalPrice, promotionalPrice, trainingDays, modalityType, trainingTime } = req.body;
@@ -50,7 +50,7 @@ exports.updateGymType = async (req, res) => {
     }
 };
 
-
+//deletar modalidade
 exports.deleteGymType = async (req, res) => {
     const { id } = req.params;
 
@@ -65,7 +65,7 @@ exports.deleteGymType = async (req, res) => {
     }
 };
 
-
+//pegar todas as modalidade
 exports.getAllGymTypes = async (req, res) => {
     try {
         const gymTypes = await Gym.find();

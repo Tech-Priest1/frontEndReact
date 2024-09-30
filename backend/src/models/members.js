@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const membersSchema = new mongoose.Schema({
     name: { type: String, required: true },
     cpf: { type: String, required: true, minlength: 11, maxlength: 11, unique: true },
@@ -8,14 +9,13 @@ const membersSchema = new mongoose.Schema({
     payingTime: { type: Date, required: true },
     password: { type: String, required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "Admins" },
-    
     role: {
         type: String,
         enum: ['member'], 
         default: 'member'
     },
+    avatar: { type: String, default: '/default-avatar.png' } // Added avatar field
 });
-
 
 const Members = mongoose.model("Members", membersSchema);
 module.exports = Members;

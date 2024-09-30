@@ -14,7 +14,7 @@ const UserProfile = ({ currentUser }) => {
   };
 
   const handleAvatarChange = () => {
-    const newAvatarUrl = prompt("Enter new avatar URL:"); // or use a file input
+    const newAvatarUrl = prompt("Enter new avatar URL:"); 
     if (newAvatarUrl) {
       updateAvatar(newAvatarUrl);
     }
@@ -23,7 +23,7 @@ const UserProfile = ({ currentUser }) => {
   return (
     <div>
       <img src={avatar} alt="User Avatar" onClick={handleAvatarChange} />
-      {/* Other user profile details */}
+      
     </div>
   );
 };

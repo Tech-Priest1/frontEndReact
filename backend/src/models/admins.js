@@ -10,10 +10,10 @@ const adminSchema = new mongoose.Schema({
         enum: ['admin'], 
         default: 'admin' 
     },
+    avatar: { type: String, default: '/default-avatar.png' } // Added avatar field
 }, {
     collection: 'admins' 
 });
 
 const Admin = mongoose.model("Admin", adminSchema);
-
 module.exports = Admin;

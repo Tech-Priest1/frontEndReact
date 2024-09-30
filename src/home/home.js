@@ -1,27 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../navBar/navBar';
 
-const Home = (props) => {
-  const { loggedIn, email, avatar, setLoggedIn } = props; 
+const Home = ({ loggedIn }) => { 
   const navigate = useNavigate();
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
     const fetchMembers = async () => {
-      if (!loggedIn) return; // Only fetch members if logged in
+      if (!loggedIn) return;
       try {
-        const response = await axios.get('http://localhost:5000/api/member'); // Adjust the API route as needed
+        const response = await axios.get('http://localhost:5000/api/member');
         const membersWithGymTime = response.data.map(member => {
           const payingTime = new Date(member.payingTime);
           const currentTime = new Date();
           const timeDifference = Math.abs(currentTime - payingTime);
-          const gymTime = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); 
-          return {
-            ...member,
-            gymTime,
-          };
+          const gymTime = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+          return { ...member, gymTime };
         });
         setMembers(membersWithGymTime);
       } catch (error) {
@@ -32,19 +27,14 @@ const Home = (props) => {
     fetchMembers();
   }, [loggedIn]);
 
-  const handleLogout = () => {
-    setLoggedIn(false);
-    navigate('/login');
-  };
-
   const handleDelete = async (id) => {
     try {
-        await axios.delete(`http://localhost:5000/api/member/${id}`); // Make sure the ID is correct
-        setMembers(members.filter(member => member._id !== id)); // Update state after deletion
+      await axios.delete(`http://localhost:5000/api/member/${id}`);
+      setMembers(members.filter(member => member._id !== id));
     } catch (error) {
-        console.error("Error deleting member:", error);
+      console.error("Error deleting member:", error);
     }
-};
+  };
 
   const handleEdit = (id) => {
     navigate(`/editMember/${id}`);
@@ -52,7 +42,6 @@ const Home = (props) => {
 
   return (
     <div className="mainContainer">
-      <Navbar handleLogout={handleLogout} email={email} avatar={avatar} loggedIn={loggedIn} />
       <div className="titleContainerHome">
         <div>Gerenciador de Academia</div>
       </div>
@@ -62,7 +51,6 @@ const Home = (props) => {
             <div className='homeLoginText'>Faça login para começar</div>
             <div className="separador">
               <button type="button" className='inputButton' onClick={() => navigate('/login')}>Login</button>
-              <button type="button" className='inputButton' onClick={() => navigate('/register')}>Registrar</button>
             </div>
           </div>
         )}

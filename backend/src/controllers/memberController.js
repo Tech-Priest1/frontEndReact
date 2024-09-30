@@ -1,5 +1,6 @@
 const Members = require("../models/members");
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 
 // Add membros 
 exports.addMember = async (req, res) => {
@@ -7,7 +8,7 @@ exports.addMember = async (req, res) => {
 
    
     if (!password) {
-        return res.status(400).json({ error: "Password is required." });
+        return res.status(400).json({ error: "Senha é necessária." });
     }
 
     try {
@@ -28,10 +29,38 @@ exports.addMember = async (req, res) => {
         await newMember.save();
         res.status(201).json(newMember);
     } catch (error) {
-        console.error("Error while adding member:", error);
-        res.status(500).json({ error: "Error adding member." });
+        console.error("Error ao adicionar membro:", error);
+        res.status(500).json({ error: "Error ao adicionar membro." });
     }
 };
+exports.loginMember = async (req, res) => {
+    const { cpf, password } = req.body;
+
+    try {
+        const member = await Members.findOne({ cpf });
+        if (!member) {
+            return res.status(404).json({ message: 'Membro não encontrado' });
+        }
+
+        const isMatch = await bcrypt.compare(password, member.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Senha errada' });
+        }
+
+        // Create JWT token
+        const token = jwt.sign({ id: member._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        // Ensure that the avatar is available for members
+        const avatar = member.avatar || '/default-avatar.png'; // Use the default avatar if none exists
+
+        return res.json({ token, cpf: member.cpf, name: member.name, avatar, role: 'member' });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro de servidor' });
+    }
+};
+
 
 // Update membros 
 exports.updateMember = async (req, res) => {
@@ -39,26 +68,26 @@ exports.updateMember = async (req, res) => {
     const { name, gymType, price, payingTime } = req.body;
 
     try {
-        console.log("Updating member with ID:", id);
-        console.log("Received data:", req.body);
+        console.log("Atualziando membro com ID:", id);
+        console.log("Recebendo data:", req.body);
 
-        // Fetch the member by ID
+        
         const member = await Members.findById(id);
         if (!member) {
             return res.status(404).json({ error: "Membro não encontrado." });
         }
-        console.log("Fetched member:", member);
+        console.log("Pegando membro:", member);
 
-        // Check if the user is an admin or the member trying to update their own data
+       
         console.log("Is Admin:", req.isAdmin);
-        console.log("User ID from request:", req.userId);
+        console.log("User ID pedido:", req.userId);
         console.log("Fetched member ID:", member._id.toString());
 
         if (!req.isAdmin && member._id.toString() !== req.userId) {
             return res.status(403).json({ error: "Acesso negado." });
         }
 
-        // Update member details
+        
         const updatedMember = await Members.findByIdAndUpdate(
             id,
             { name, gymType, price, payingTime },
@@ -71,7 +100,7 @@ exports.updateMember = async (req, res) => {
 
         res.status(200).json(updatedMember);
     } catch (error) {
-        console.error("Error updating member:", error);
+        console.error("Error atualizando membro:", error);
         res.status(500).json({ error: "Erro ao atualizar membro." });
     }
 };
@@ -81,47 +110,46 @@ exports.updateMember = async (req, res) => {
 // Deletar membros ()
 exports.deleteMember = async (req, res) => {
     const { id } = req.params;
-    console.log("Attempting to delete member with ID:", id); // Debug log
+    console.log("Tentando deletar Membro com ID:", id); // Debug log
 
     try {
         const member = await Members.findById(id);
-        console.log("Found member:", member); // Debug log
+        console.log("Membro encontrado:", member); // Debug log
         if (!member) {
-            return res.status(404).json({ error: "Member not found." });
+            return res.status(404).json({ error: "Membro não encontrado." });
         }
 
         await Members.findByIdAndDelete(id);
-        res.status(200).json({ message: "Member deleted successfully!" });
+        res.status(200).json({ message: "Membro deletado com sucesso!" });
     } catch (error) {
         console.error("Error while deleting member:", error);
-        res.status(500).json({ error: "Error deleting member." });
+        res.status(500).json({ error: "Error deletando membro." });
     }
 };
+
 //pegar por id
+
 
 exports.getMemberById = async (req, res) => {
   try {
-    const memberId = req.params.id;
-    const member = await Members.findById(memberId);
-
+    const member = await Members.findById(req.params.id);
     if (!member) {
-      return res.status(404).json({ message: 'Member not found' });
+      return res.status(404).json({ message: "Member not found" });
     }
-
-    res.json(member);
+    res.status(200).json(member);
   } catch (error) {
     console.error("Error fetching member:", error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 };
 
-
+//listar todos os membros
 exports.getAllMembers = async (req, res) => {
     try {
         const getMembers = await Members.find();
         res.status(200).json(getMembers);
     } catch (error) {
         console.error("Error fetching members:", error);
-        res.status(500).json({ error: "Error listing members." });
+        res.status(500).json({ error: "Error listando membros." });
     }
 };

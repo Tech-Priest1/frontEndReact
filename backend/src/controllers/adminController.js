@@ -43,12 +43,17 @@ exports.loginAdmin = async (req, res) => {
 
         // Generate a new token
         const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        return res.json({ token, email: admin.email, avatar: admin.avatar });
+
+        // Ensure that the avatar is available, or use a default one
+        const avatar = admin.avatar || '/default-avatar.png'; 
+
+        return res.json({ token, email: admin.email, avatar, role: 'admin' });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Erro de servidor' });
     }
 };
+
 
 // Atualizar Admin
 exports.updateAdmin = async (req, res) => {

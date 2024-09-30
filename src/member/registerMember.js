@@ -10,15 +10,15 @@ const RegisterMember = () => {
   const [price, setPrice] = useState('');
   const [priceType, setPriceType] = useState('normal'); 
   const [payingTime, setPayingTime] = useState('');
-  const [password, setPassword] = useState(''); // Added password state
+  const [password, setPassword] = useState(''); 
   const [gymTypes, setGymTypes] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch gym types from MongoDB on component mount
+  
   useEffect(() => {
     const fetchGymTypes = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/gym/'); // Adjust route if necessary
+        const response = await axios.get('http://localhost:5000/api/gym/'); 
         setGymTypes(response.data);
       } catch (error) {
         console.error("Error fetching gym types:", error);
@@ -43,7 +43,7 @@ const RegisterMember = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare the data to send
+  
     const memberData = {
       name,
       cpf,
@@ -51,13 +51,12 @@ const RegisterMember = () => {
       gymType,
       price,
       payingTime,
-      password, // Include password in the request
+      password, 
     };
 
     try {
-      // Send POST request to save the member in the database
-      await axios.post('http://localhost:5000/api/member/register', memberData); // Adjust route if necessary
-      navigate('/'); // Redirect after successful registration
+      await axios.post('http://localhost:5000/api/member/register', memberData); 
+      navigate('/'); 
     } catch (error) {
       console.error("Error ao registrar membro:", error);
       alert('Erro ao registrar membro!');

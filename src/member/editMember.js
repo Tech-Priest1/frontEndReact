@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
 
 const EditMember = () => {
   const { id } = useParams();
@@ -11,15 +13,12 @@ const EditMember = () => {
   const [payingTime, setPayingTime] = useState('');
   const navigate = useNavigate();
 
-  // Fetch member data and gym types from MongoDB when component mounts
   useEffect(() => {
     const fetchMember = async () => {
       try {
-        // Fetch member by ID
         const memberResponse = await axios.get(`http://localhost:5000/api/member/${id}`);
         const member = memberResponse.data;
 
-        // Fetch gym types from MongoDB
         const gymTypesResponse = await axios.get('http://localhost:5000/api/gym/');
         setGymTypes(gymTypesResponse.data);
 
@@ -53,7 +52,7 @@ const EditMember = () => {
   }, [gymType, payingTime, gymTypes]);
 
   const calculateDaysSincePayingTime = (payingTime) => {
-    if (!payingTime) return 0; // Handle case when payingTime is not set
+    if (!payingTime) return 0; 
     const currentTime = new Date();
     const startTime = new Date(payingTime);
     const timeDifference = Math.abs(currentTime - startTime);
@@ -66,19 +65,41 @@ const EditMember = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+  
     const memberData = { name, gymType, price, payingTime };
-
+  
     try {
       const token = localStorage.getItem('token');
       console.log('Token before PUT:', token);
       await axios.put(`http://localhost:5000/api/member/${id}`, memberData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      navigate('/'); // Redirect after successful update
+  
+      const decodedToken = jwtDecode(token);
+      const userRole = decodedToken.role;
+  
+      if (userRole === 'admin') {
+        navigate('/');
+      } else {
+        navigate('/member/homeMember');
+      }
+  
     } catch (error) {
       console.error("Error updating member:", error);
       alert('Erro ao atualizar membro!');
+    }
+  };
+  
+
+  const handleCancel = () => {
+    const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token); 
+    const userRole = decodedToken.role;  
+
+    if (userRole === 'admin') {
+      navigate('/'); 
+    } else {
+      navigate('/member/homeMember');  
     }
   };
 
@@ -144,7 +165,7 @@ const EditMember = () => {
         <br />
         <div className="separador">
           <button type="submit" className='inputButton'>Atualizar</button>
-          <button type="button" className='inputButton' onClick={() => navigate('/')}>Cancelar</button>
+          <button type="button" className='inputButton' onClick={handleCancel}>Cancelar</button>
         </div>
       </form>
     </div>
@@ -152,3 +173,4 @@ const EditMember = () => {
 };
 
 export default EditMember;
+
