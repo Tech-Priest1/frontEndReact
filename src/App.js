@@ -58,7 +58,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/homeMember/:id" element={<ProtectedRoute loggedIn={loggedIn}><HomeMember loggedIn={loggedIn} memberId={memberId} avatar={avatar} setLoggedIn={setLoggedIn} /></ProtectedRoute>} />
           <Route path="/registerMember" element={<ProtectedRoute loggedIn={loggedIn} isAdmin={userRole === 'admin'}><RegisterMember /></ProtectedRoute>} />
-          <Route path="/editMember/:id" element={<ProtectedRoute loggedIn={loggedIn} ><EditMember /></ProtectedRoute>} />
+          <Route path="/editMember/:id" element={<ProtectedRoute loggedIn={loggedIn}><EditMember isAdmin={userRole === 'admin'} /></ProtectedRoute>} />
           <Route path="/editModality" element={<ProtectedRoute loggedIn={loggedIn} isAdmin={userRole === 'admin'}><EditModality /></ProtectedRoute>} />
           <Route path="/editUsers" element={<ProtectedRoute loggedIn={loggedIn} isAdmin={userRole === 'admin'}><EditUsers /></ProtectedRoute>} />
           <Route path="*" element={<Home email={email} loggedIn={loggedIn} avatar={avatar} setLoggedIn={setLoggedIn} />} />

@@ -1,4 +1,5 @@
 const Gym = require("../models/gymType");
+const Members = require('../models/members');
 
 //criar modalidade
 exports.createGymType = async (req, res) => {
@@ -72,5 +73,57 @@ exports.getAllGymTypes = async (req, res) => {
         res.status(200).json(gymTypes);
     } catch (error) {
         res.status(500).json({ error: "Erro ao listar tipos de Modalidades." });
+    }
+};
+
+
+// pegar modalidade específica por ID
+exports.getGymTypeById = async (req, res) => {
+    const { id } = req.params;
+    console.log("Fetching gym type with ID:", id);
+
+    try {
+        const gymType = await Gym.findById(id);
+        if (!gymType) {
+            return res.status(404).json({ error: "Tipo de academia não encontrado." });
+        }
+        res.status(200).json(gymType);
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao buscar tipo de academia." });
+    }
+};
+
+// pegar gym types por tipo da modalidade
+exports.getModalitiesByUserType = async (req, res) => {
+    try {
+        const member = await Members.findById(req.params.id);
+        if (!member) {
+            return res.status(404).json({ message: "Member not found" });
+        }
+
+        console.log("Fetched member:", member);
+
+        // Use a case-insensitive regex for the gym type search
+        const gymEntry = await Gym.findOne({ name: new RegExp(`^${member.gymType}$`, 'i') });
+
+        console.log("Gym Entry:", gymEntry);
+
+        if (!gymEntry) {
+            return res.status(404).json({ error: "Gym type not found." });
+        }
+
+        // Fetch modalities based on the modalityType from the gym entry
+        const modalities = await Gym.find({ modalityType: gymEntry.modalityType });
+
+        console.log("Modalities:", modalities);
+
+        if (modalities.length === 0) {
+            return res.status(404).json({ error: "No modalities found." });
+        }
+
+        res.status(200).json(modalities);
+    } catch (error) {
+        console.error("Error fetching modalities:", error);
+        res.status(500).json({ error: "Error fetching modalities." });
     }
 };

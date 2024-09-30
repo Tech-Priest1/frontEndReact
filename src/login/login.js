@@ -4,18 +4,18 @@ import { useNavigate } from 'react-router-dom';
 const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [cpf, setCpf] = useState(''); // For member login
-  const [loginType, setLoginType] = useState('admin'); // Admin or Member
+  const [cpf, setCpf] = useState(''); 
+  const [loginType, setLoginType] = useState('admin'); 
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [cpfError, setCpfError] = useState(''); // Error for CPF
+  const [cpfError, setCpfError] = useState(''); 
   const DEFAULT_AVATAR_URL = '../public/avatar.png';
   const navigate = useNavigate();
 
   const onButtonClick = async () => {
     setEmailError('');
     setPasswordError('');
-    setCpfError(''); // Reset CPF error
+    setCpfError(''); 
 
     if (loginType === 'admin') {
       // eslint-disable-next-line
@@ -41,7 +41,7 @@ const Login = (props) => {
         return;
       }
 
-      // Proceed with admin login request
+    
       try {
         const response = await fetch('http://localhost:5000/api/admin/login', {
           method: 'POST',
@@ -54,13 +54,13 @@ const Login = (props) => {
         const data = await response.json();
         if (response.ok) {
           props.setLoggedIn(true);
-          props.setEmail(data.email); // Store admin email
-          props.setUserRole(data.role); // Set user role
+          props.setEmail(data.email); 
+          props.setUserRole(data.role); 
           localStorage.setItem('token', data.token);
           if (typeof props.setAvatar === 'function') {
               props.setAvatar(data.avatar || DEFAULT_AVATAR_URL);
           }
-          navigate('/'); // Admin homepage or member homepage based on role
+          navigate('/'); 
         } else {
           setPasswordError(data.message || 'Email ou senha inválidos');
         }
@@ -68,9 +68,9 @@ const Login = (props) => {
         setPasswordError('Erro ao realizar login. Tente novamente mais tarde.');
       }
     } else {
-      // Member login section
+     
       if (cpf === '') {
-        setCpfError('Digite o CPF'); // Set CPF error message
+        setCpfError('Digite o CPF');
         return;
       }
 
@@ -83,9 +83,6 @@ const Login = (props) => {
         setPasswordError('A senha precisa ter 5 ou mais caracteres');
         return;
       }
-
-      console.log("Logging in with:", { cpf, password });
-      // Proceed with member login request
       try {
         const response = await fetch('http://localhost:5000/api/member/login', {
           method: 'POST',
@@ -99,8 +96,8 @@ const Login = (props) => {
 
         if (response.ok) {
           props.setLoggedIn(true);
-          props.setEmail(data.name); // Store member name
-          props.setUserRole(data.role); // Set user role for member
+          props.setEmail(data.name); 
+          props.setUserRole(data.role); // guarda a role do BD
           localStorage.setItem('token', data.token);
           if (typeof props.setAvatar === 'function') {
               props.setAvatar(data.avatar || DEFAULT_AVATAR_URL);

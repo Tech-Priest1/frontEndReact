@@ -1,0 +1,76 @@
+.mainContainer {
+    padding: 20px;
+  }
+  
+  .titleContainerHome {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .homeLoginText {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .inputButton {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .inputButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .memberContainer {
+    margin-top: 20px;
+  }
+  
+  .memberTitulo {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+  
+  .memberList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .memberItem {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    max-width: 7000px;
+  }
+  
+  .memberDetails {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+  }
+  
+  .memberInfo {
+    flex-grow: 1;
+  }
+  
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .separador {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end; 
+  }
+  

@@ -18,7 +18,6 @@ const authenticate = async (req, res, next) => {
         const admin = await Admin.findById(req.userId);
         if (admin) {
             req.isAdmin = true; 
-            console.log("Is Admin:", req.isAdmin);
             next();
         } else {
            
@@ -31,7 +30,7 @@ const authenticate = async (req, res, next) => {
             }
         }
     } catch (error) {
-        console.error("Error verifying token:", error);
+        console.error("Error verificando token:", error);
         return res.status(401).json({ error: 'Token inválido.' });
     }
 };

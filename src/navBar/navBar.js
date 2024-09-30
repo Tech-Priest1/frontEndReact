@@ -43,12 +43,12 @@ const Navbar = ({ handleLogout, email, avatar, updateAvatar, loggedIn, role, nam
 
       
         {loggedIn && <input className="inputButton" type="button" onClick={() => {
-            console.log('Logout button clicked');
+          
             handleLogout();
         }} value="Sair" />}
       </div>
 
-      {/* Avatar e email/no me*/}
+      {/* Avatar e email/nome*/}
       <div className="navbar-email">
         {loggedIn && (
           <>

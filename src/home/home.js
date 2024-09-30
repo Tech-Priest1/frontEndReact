@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-const Home = ({ loggedIn }) => { 
+import './home.css';
+const Home = ({ loggedIn }) => {
   const navigate = useNavigate();
   const [members, setMembers] = useState([]);
 
@@ -61,8 +61,18 @@ const Home = ({ loggedIn }) => {
             <h3 className="memberTitulo">Membros da Academia</h3>
             <ul className="memberList">
               {members.map((member) => (
-                <li key={member._id} className="memberItem"> 
-                  <b>Id:</b> {member._id} <b>Nome:</b> {member.name} / <b>Tempo de Academia:</b> {member.gymTime} Dias
+                <li key={member._id} className="memberItem">
+                  <div className="memberDetails">
+                    <img src="path/to/default-avatar.png" alt="Avatar" className="avatar" />
+                    <div className="memberInfo">
+                    <h3>{member.name}</h3>
+                <b>CPF:</b> {member.cpf}<br/>
+                <b>Número:</b> {member.number} <br/>
+                <br/>
+                <b>Modalidade:</b> {member.gymType}<br/>
+                <b>Tempo de Academia:</b> {member.gymTime} Dias {/* Display gym time */}
+                    </div>
+                  </div>
                   <div className="separador">
                     <button type="button" onClick={() => handleEdit(member._id)}>Edit</button>
                     <button type="button" onClick={() => handleDelete(member._id)}>Delete</button>

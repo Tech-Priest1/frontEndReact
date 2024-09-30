@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
 
 
-const EditMember = () => {
+const EditMember = ({ isAdmin }) => {
   const { id } = useParams();
   const [name, setName] = useState('');
   const [gymType, setGymType] = useState('');
   const [price, setPrice] = useState('');
   const [gymTypes, setGymTypes] = useState([]);
   const [payingTime, setPayingTime] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Token inválido!');
+      navigate('/');
+    }
     const fetchMember = async () => {
       try {
         const memberResponse = await axios.get(`http://localhost:5000/api/member/${id}`);
@@ -65,41 +70,32 @@ const EditMember = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    
     const memberData = { name, gymType, price, payingTime };
-  
+
     try {
       const token = localStorage.getItem('token');
-      console.log('Token before PUT:', token);
       await axios.put(`http://localhost:5000/api/member/${id}`, memberData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-  
-      const decodedToken = jwtDecode(token);
-      const userRole = decodedToken.role;
-  
-      if (userRole === 'admin') {
-        navigate('/');
+
+     
+      if (isAdmin) {
+        navigate('/');  
       } else {
-        navigate('/member/homeMember');
+        navigate('/member/homeMember'); 
       }
-  
     } catch (error) {
       console.error("Error updating member:", error);
       alert('Erro ao atualizar membro!');
     }
   };
-  
 
   const handleCancel = () => {
-    const token = localStorage.getItem('token');
-    const decodedToken = jwtDecode(token); 
-    const userRole = decodedToken.role;  
-
-    if (userRole === 'admin') {
-      navigate('/'); 
+    if (isAdmin) {
+      navigate('/');
     } else {
-      navigate('/member/homeMember');  
+      navigate('/member/homeMember');
     }
   };
 
@@ -127,7 +123,7 @@ const EditMember = () => {
             className='inputBox'
             required
           >
-            <option value="" disabled>Selecione a modalidade</option>
+            <option value="" disabled>Mudar Modalidade</option>
             {gymTypes.map((type, index) => (
               <option key={index} value={type.name}>{type.name}</option>
             ))}
@@ -145,9 +141,11 @@ const EditMember = () => {
               <option value={gymTypes.find(type => type.name === gymType)?.normalPrice || ''}>
                 Normal: {gymTypes.find(type => type.name === gymType)?.normalPrice || ''}
               </option>
-              <option value={gymTypes.find(type => type.name === gymType)?.promotionalPrice || ''}>
-                Promocional: {gymTypes.find(type => type.name === gymType)?.promotionalPrice || ''}
-              </option>
+              {isAdmin && (
+                <option value={gymTypes.find(type => type.name === gymType)?.promotionalPrice || ''}>
+                  Promocional: {gymTypes.find(type => type.name === gymType)?.promotionalPrice || ''}
+                </option>
+              )}
             </select>
           </div>
         )}
@@ -173,4 +171,3 @@ const EditMember = () => {
 };
 
 export default EditMember;
-

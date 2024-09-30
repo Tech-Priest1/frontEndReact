@@ -153,3 +153,26 @@ exports.getAllMembers = async (req, res) => {
         res.status(500).json({ error: "Error listando membros." });
     }
 };
+// atualizar avatar
+exports.updateAvatar = async (req, res) => {
+    const memberId = req.params.id;
+  
+    try {
+      const avatarPath = `/uploads/avatars/${memberId}_${Date.now()}.png`;
+  
+      // Assuming you are storing the file in a specific folder
+      const uploadDir = path.join(__dirname, '..', 'public', 'uploads', 'avatars');
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+  
+      const avatarFile = req.files.avatar; // Assuming you're using multer or similar for file handling
+      avatarFile.mv(path.join(uploadDir, avatarPath));
+  
+      const updatedMember = await Members.findByIdAndUpdate(memberId, { avatar: avatarPath }, { new: true });
+  
+      res.json({ avatar: updatedMember.avatar });
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating avatar', error });
+    }
+  };

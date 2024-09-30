@@ -224,7 +224,7 @@ const EditModality = () => {
 >
     <option value="">Selecione o tipo de modalidade</option>
     <option value="Artes Marciais">Artes Marciais</option>
-    <option value="Treinamento de força">Treinamento de força</option>
+    <option value="Treinamento de Força">Treinamento de Força</option>
     <option value="Danças">Danças</option>
     <option value="Pilates">Pilates</option>
 </select>
