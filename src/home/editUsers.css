@@ -1,72 +1,93 @@
-
 .userContainer {
-    max-height: 1000px; 
-    overflow-y: auto;
-    border: 1px solid #000000;
-    padding: 20px;
-    margin-right: auto; 
-    margin-left: auto; 
-    max-width: 1200px; 
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-  }
+  max-height: 1000px; 
+  overflow-y: auto;
+  border: 1px solid #000000;
+  padding: 20px;
+  margin-right: auto; 
+  margin-left: auto; 
+  max-width: 1200px; 
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.userTitulo {
+  position: sticky;
+  padding: 0;
+  font-size: 3rem;
+  text-align: center;
+  z-index: 10;
+  padding-top: 50px;
+}
+
+.userList {
+  list-style-type: none;
+  font-size: 1.2rem;
+  padding: 0;
+  margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap; /* allows multiple cards per row */
+  justify-content: center; /* centers the cards */
+  width: 100%;
+}
+
+.userItem {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 700px;
+  max-width: 700px;
+}
+
+.userDetails {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+}
+
+.userInfo {
+  flex-grow: 1;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.fixedBottom {
+  position: sticky;
+  bottom: 0;
+  background-color: rgb(212, 212, 212);
+  padding: 10px;
+  z-index: 10;
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.inputBoxUser {
+  height: 48px;
+  width: 100%;
+  margin-bottom: 10px; 
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid rgb(0, 0, 0);
+  box-sizing: border-box;
+}
+
+.separadorUser1 {
+  display: flex;
+  justify-content: flex-end;
   
-  .userTitulo {
-    position: sticky;
-    padding: 0;
-    font-size: 3rem;
-    text-align: center;
-    z-index: 10;
-    padding-top: 50px;
-  }
-  
-  .userList {
-    list-style-type: none;
-    font-size: 1.2rem;
-    padding: 0;
-    margin: 20px 0;
-    padding-left: 380px ;
-    flex-grow: 1;
-    overflow-y: auto;
-    width: 100%;
-  }
-  
-  .userItem {
-    padding: 10px;
-    border-bottom: 1px solid #000000;
-  }
-  
-  .fixedBottom {
-    position: sticky;
-    bottom: 0;
-    background-color: rgb(212, 212, 212);
-    padding: 10px;
-    z-index: 10;
-    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .inputBoxUser {
-    height: 48px;
-    width: 100%;
-    margin-bottom: 10px; 
-    padding-left: 500px;
-    font-size: large;
-    border-radius: 8px;
-    border: 1px solid rgb(0, 0, 0);
-    box-sizing: border-box;
-  }
-  
-  .separadorUser1{
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px; 
-    margin-right: 820px;
-  }
-  
-  .separadorUser2 {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px; 
-  }
+}
+
+.separadorUser2 {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+

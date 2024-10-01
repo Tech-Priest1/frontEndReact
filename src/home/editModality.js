@@ -174,22 +174,29 @@ const EditModality = () => {
       <div>
         <h3 className="modalityTitulo">Editar Tipos de Inscrição</h3>
       </div>
-      <ul className="modalityList">
+      <div className="modalityCardContainer">
         {gymTypes.map((gymType, index) => (
-          <li key={index} className="modalityItem">
-            <div className="modalityText">
-              {gymType.name} / <b>Normal:</b> {gymType.normalPrice} - <b>Promocional:</b> {gymType.promotionalPrice} - <b>Dias de Treino:</b> {gymType.trainingDays} - <b>Tipo:</b> {gymType.modalityType} - <b>Hora:</b> {gymType.trainingTime}
+          <div key={index} className="modalityCard">
+            <div className="modalityCardHeader">
+              <h4>{gymType.name}</h4>
             </div>
-            <div className="separadorModality">
+            <div className="modalityCardBody">
+              <p><b>Normal:</b> {gymType.normalPrice}</p>
+              <p><b>Promocional:</b> {gymType.promotionalPrice}</p>
+              <p><b>Dias de Treino:</b> {gymType.trainingDays}</p>
+              <p><b>Tipo:</b> {gymType.modalityType}</p>
+              <p><b>Hora:</b> {gymType.trainingTime}</p>
+            </div>
+            <div className="modalityCardFooter">
               <button type="button" className="inputButton" onClick={() => handleEditModality(index)}>Editar</button>
               <button type="button" className="inputButton" onClick={() => handleDeleteGymType(index)}>Delete</button>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
-
+      </div>
+  
       <div className="fixedBottom">
-      <input
+        <input
           type="text"
           placeholder={editingIndex !== null ? 'Nome' : 'Nova Modalidade'}
           value={editingIndex !== null ? editedName : newGymType}
@@ -217,57 +224,55 @@ const EditModality = () => {
           onChange={(e) => editingIndex !== null ? setEditedTrainingDays(e.target.value) : setTrainingDays(e.target.value)}
           className="inputBoxModality"
         />
-       <select
-    value={editingIndex !== null ? editedModalityType : modalityType}
-    onChange={(e) => editingIndex !== null ? setEditedModalityType(e.target.value) : setModalityType(e.target.value)}
-    className="inputBoxModality"
->
-    <option value="">Selecione o tipo de modalidade</option>
-    <option value="Artes Marciais">Artes Marciais</option>
-    <option value="Treinamento de Força">Treinamento de Força</option>
-    <option value="Danças">Danças</option>
-    <option value="Pilates">Pilates</option>
-</select>
-
-<div className="modalityContainer">
-      <input
-        type="time"
-        value={initialTime}
-        onChange={(e) => setInitialTime(e.target.value)}
-        placeholder="Hora Inicial"
-        className="inputBoxModality"
-      />
-      <input
-        type="time"
-        value={endTime}
-        onChange={(e) => setEndTime(e.target.value)}
-        placeholder="Hora Final"
-        className="inputBoxModality"
-      />
-
-      <div>
-        <span>Horário: {trainingTime}</span>
-      </div>
-    </div>
-
+        
+        <select
+          value={editingIndex !== null ? editedModalityType : modalityType}
+          onChange={(e) => editingIndex !== null ? setEditedModalityType(e.target.value) : setModalityType(e.target.value)}
+          className="inputBoxModality"
+        >
+          <option value="">Selecione o tipo de modalidade</option>
+          <option value="Artes Marciais">Artes Marciais</option>
+          <option value="Treinamento de Força">Treinamento de Força</option>
+          <option value="Danças">Danças</option>
+          <option value="Pilates">Pilates</option>
+        </select>
+  
+        <div className="modalityContainer">
+          <input
+            type="time"
+            value={initialTime}
+            onChange={(e) => setInitialTime(e.target.value)}
+            placeholder="Hora Inicial"
+            className="inputBoxModality"
+          />
+          <input
+            type="time"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+            placeholder="Hora Final"
+            className="inputBoxModality"
+          />
+  
+          <div>
+            <span>Horário: {trainingTime}</span>
+          </div>
+        </div>
+  
         {editingIndex !== null ? (
-          <>
-            <div className="separador">
-              <button type="button" className="inputButton" onClick={handleSaveModality}>Salvar</button>
-              <button type="button" className="inputButton" onClick={() => setEditingIndex(null)}>Cancelar</button>
-            </div>
-          </>
+          <div className="separador">
+            <button type="button" className="inputButton" onClick={handleSaveModality}>Salvar</button>
+            <button type="button" className="inputButton" onClick={() => setEditingIndex(null)}>Cancelar</button>
+          </div>
         ) : (
-          <>
-            <div className="separador">
-              <button type="button" className="inputButton" onClick={handleAddGymType}>Adicionar</button>
-              <button type="button" className="inputButton" onClick={handleCancel}>Cancelar</button>
-            </div>
-          </>
+          <div className="separador">
+            <button type="button" className="inputButton" onClick={handleAddGymType}>Adicionar</button>
+            <button type="button" className="inputButton" onClick={handleCancel}>Cancelar</button>
+          </div>
         )}
       </div>
     </div>
   );
+  
 };
 
 export default EditModality;

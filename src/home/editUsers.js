@@ -15,7 +15,7 @@ const EditAdmin = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/admin'); // endereço da rota backend
+        const response = await axios.get('http://localhost:5000/api/admin');
         setUsers(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -56,17 +56,14 @@ const EditAdmin = () => {
         const userId = users[editingUserIndex]._id;
         const response = await axios.put(`http://localhost:5000/api/admin/${userId}`, updatedUser); 
     
-       
         const updatedUsers = [...users];
         updatedUsers[editingUserIndex] = response.data; 
         setUsers(updatedUsers);
     
         setEditingUserIndex(null);
-    } catch (error) {
-       
+      } catch (error) {
         alert(error.response?.data?.message || 'Erro ao atualizar usuário.');
-    }
-    
+      }
     }
   };
 
@@ -74,13 +71,10 @@ const EditAdmin = () => {
     const userId = users[index]._id; 
   
     try {
-      await axios.delete(`http://localhost:5000/api/admin/${userId}`); //  backend URL
-  
-      
+      await axios.delete(`http://localhost:5000/api/admin/${userId}`);
       const updatedUsers = users.filter((_, i) => i !== index);
       setUsers(updatedUsers);
     } catch (error) {
-      
       alert(error.response?.data?.message || 'Erro ao deletar usuário.');
     }
   };
@@ -101,8 +95,14 @@ const EditAdmin = () => {
       </div>
       <ul className="userList">
         {users.map((user, index) => (
-          <li key={user._id}> 
-            {user.name} <b>/</b> {user.email} <b>/</b> {user.cpf}
+          <li key={user._id} className="userItem">
+            <div className="userDetails">
+              <div className="userInfo">
+                <h3>{user.name}</h3>
+                <b>Email:</b> {user.email}<br/>
+                <b>CPF:</b> {user.cpf}
+              </div>
+            </div>
             <div className="separadorUser1">
               <button type="button" className="inputButton" onClick={() => handleEditUser(index)}>Edit</button>
               <button type="button" className="inputButton" onClick={() => handleDeleteUser(index)}>Delete</button>

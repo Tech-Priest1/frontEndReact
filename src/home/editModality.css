@@ -69,6 +69,57 @@
   display: flex;
   justify-content: space-between;
   padding: 0 20px; 
-  padding-right: 500px;
+  padding-right: 400px;
   
 }
+
+.modalityCardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+.modalityCard {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  background-color: #fff;
+  box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.modalityCard:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modalityCardHeader {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.modalityCardBody {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+
+.modalityCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: -50px;
+}
+
+/* Icon specific styles */
+.modalityCardFooter .icon {
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Button styling */
