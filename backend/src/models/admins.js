@@ -10,7 +10,7 @@ const adminSchema = new mongoose.Schema({
         enum: ['admin'], 
         default: 'admin' 
     },
-    avatar: { type: String, default: '/default-avatar.png' } // Added avatar field
+    avatar: { type: String, default: '/default-avatar.png' }
 }, {
     collection: 'admins' 
 });

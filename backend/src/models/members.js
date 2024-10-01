@@ -14,7 +14,7 @@ const membersSchema = new mongoose.Schema({
         enum: ['member'], 
         default: 'member'
     },
-    avatar: { type: String, default: '/avatar.png' } // Added avatar field
+    avatar: { type: String, default: '/avatar.png' } 
 });
 
 const Members = mongoose.model("Members", membersSchema);

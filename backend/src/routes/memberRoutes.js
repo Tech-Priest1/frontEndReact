@@ -1,15 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const multer = require('multer');
+
 const memberController = require("../controllers/memberController");
 const authenticate = require('../middleware/authenticate');
 
+//tentando salvar imagem
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'uploads/'); // Save uploads in the "uploads" folder
+      cb(null, 'uploads/'); 
     },
     filename: (req, file, cb) => {
-      cb(null, `${Date.now()}-${file.originalname}`); // Rename the file to avoid conflicts
+      cb(null, `${Date.now()}-${file.originalname}`);
     }
   });
   const upload = multer({ storage });

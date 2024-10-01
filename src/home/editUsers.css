@@ -29,8 +29,8 @@
   padding: 0;
   margin: 20px 0;
   display: flex;
-  flex-wrap: wrap; /* allows multiple cards per row */
-  justify-content: center; /* centers the cards */
+  flex-wrap: wrap; 
+  justify-content: center; 
   width: 100%;
 }
 

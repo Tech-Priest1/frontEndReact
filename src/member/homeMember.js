@@ -78,7 +78,7 @@ const HomeMember = ({ loggedIn }) => {
         }
       );
 
-      // Update the member object with the new avatar URL
+      // tentando update no avatar
       setMember({ ...member, avatar: response.data.avatar });
     } catch (error) {
       console.error('Error updating avatar:', error);

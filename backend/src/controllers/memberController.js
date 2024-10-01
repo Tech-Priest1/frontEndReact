@@ -47,11 +47,11 @@ exports.loginMember = async (req, res) => {
             return res.status(400).json({ message: 'Senha errada' });
         }
 
-        // Create JWT token
+       
         const token = jwt.sign({ id: member._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Ensure that the avatar is available for members
-        const avatar = member.avatar || '/default-avatar.png'; // Use the default avatar if none exists
+      
+        const avatar = member.avatar || '/default-avatar.png'; 
 
         return res.json({ token, cpf: member.cpf, name: member.name, avatar, role: 'member' });
 
@@ -128,8 +128,6 @@ exports.deleteMember = async (req, res) => {
 };
 
 //pegar por id
-
-
 exports.getMemberById = async (req, res) => {
   try {
     const member = await Members.findById(req.params.id);
@@ -160,13 +158,13 @@ exports.updateAvatar = async (req, res) => {
     try {
       const avatarPath = `/uploads/avatars/${memberId}_${Date.now()}.png`;
   
-      // Assuming you are storing the file in a specific folder
+   
       const uploadDir = path.join(__dirname, '..', 'public', 'uploads', 'avatars');
       if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });
       }
   
-      const avatarFile = req.files.avatar; // Assuming you're using multer or similar for file handling
+      const avatarFile = req.files.avatar;
       avatarFile.mv(path.join(uploadDir, avatarPath));
   
       const updatedMember = await Members.findByIdAndUpdate(memberId, { avatar: avatarPath }, { new: true });

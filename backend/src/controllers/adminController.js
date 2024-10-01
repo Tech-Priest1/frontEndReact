@@ -41,10 +41,10 @@ exports.loginAdmin = async (req, res) => {
             return res.status(400).json({ message: 'Senha errada' });
         }
 
-        // Generate a new token
+        
         const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Ensure that the avatar is available, or use a default one
+       
         const avatar = admin.avatar || '/default-avatar.png'; 
 
         return res.json({ token, email: admin.email, avatar, role: 'admin' });

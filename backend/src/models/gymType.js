@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const gymSchema = new mongoose.Schema({
-    name: { type: String, required: true, index: true }, // Indexado para uma pesquisa mais rapida
+    name: { type: String, required: true, index: true }, 
     done: { type: Boolean, default: false }, 
     admin: { type: mongoose.Schema.Types.ObjectId, ref: "admin", required: true, index: true }, 
     normalPrice: { type: Number, required: true }, 
@@ -13,6 +13,6 @@ const gymSchema = new mongoose.Schema({
         enum: ['Artes Marciais', 'Treinamento de Força', 'Danças','Pilates'], 
     }, 
     trainingTime: { type: String, required: true } 
-}, { timestamps: true }); // Add timestamps for createdAt and updatedAt
+}, { timestamps: true }); 
 
 module.exports = mongoose.model("gym", gymSchema);

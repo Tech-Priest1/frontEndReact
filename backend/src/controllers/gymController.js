@@ -103,7 +103,7 @@ exports.getModalitiesByUserType = async (req, res) => {
 
         console.log("Fetched member:", member);
 
-        // Use a case-insensitive regex for the gym type search
+        
         const gymEntry = await Gym.findOne({ name: new RegExp(`^${member.gymType}$`, 'i') });
 
         console.log("Gym Entry:", gymEntry);
@@ -112,7 +112,7 @@ exports.getModalitiesByUserType = async (req, res) => {
             return res.status(404).json({ error: "Gym type not found." });
         }
 
-        // Fetch modalities based on the modalityType from the gym entry
+       
         const modalities = await Gym.find({ modalityType: gymEntry.modalityType });
 
         console.log("Modalities:", modalities);
