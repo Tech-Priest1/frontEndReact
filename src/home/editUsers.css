@@ -1,5 +1,4 @@
 .userContainer {
-<<<<<<< Updated upstream
   max-height: 1000px; 
   overflow-y: auto;
   border: 1px solid #000000;
@@ -92,79 +91,3 @@
   padding: 0 10px;
 }
 
-=======
-    margin-top: 100px;
-    max-height: 1000px; 
-    overflow-y: auto;
-    border: 3px solid #000000;
-    padding: 20px;
-    margin-right: auto; 
-    margin-left: auto; 
-    max-width: 1200px; 
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    border-radius: 10px;
-  }
-  
-  .userTitulo {
-    position: sticky;
-    padding: 0;
-    font-size: 3rem;
-    text-align: center;
-    z-index: 10;
-    padding-top: 50px;
-  }
-  
-  .userList {
-    list-style-type: none;
-    font-size: 1.2rem;
-    padding: 0;
-    margin: 20px 0;
-    padding-left: 380px ;
-    flex-grow: 1;
-    overflow-y: auto;
-    width: 100%;
-  }
-  
-  .userItem {
-    padding: 10px;
-    border-bottom: 1px solid #000000;
-  }
-  
-  .fixedBottom {
-    position: sticky;
-    bottom: 0;
-    background-color: rgb(36, 36, 36);
-    padding: 10px;
-    z-index: 10;
-    box-shadow: 0px -5px 10px rgba(255, 255, 255, 0.1);
-    border: 3px solid #000000;
-    border-radius: 10px;
-  }
-  
-  .inputBoxUser {
-    height: 48px;
-    width: 100%;
-    margin-bottom: 10px; 
-    padding-left: 500px;
-    font-size: large;
-    border-radius: 8px;
-    border: 1px solid rgb(0, 0, 0);
-    box-sizing: border-box;
-  }
-  
-  .separadorUser1{
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px; 
-    margin-right: 820px;
-  }
-  
-  .separadorUser2 {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px; 
-  }
->>>>>>> Stashed changes

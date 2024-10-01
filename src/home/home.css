@@ -32,7 +32,6 @@
   }
   
   .memberTitulo {
-<<<<<<< Updated upstream
     position: -webkit-sticky; 
     position: sticky;
     top: 0;
@@ -42,12 +41,6 @@
     border-bottom: 1px solid #ccc;
     font-size: 24px;
     margin-bottom: 20px;
-=======
-    font-size: 22px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
->>>>>>> Stashed changes
   }
   
   .memberList {

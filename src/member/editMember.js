@@ -74,22 +74,27 @@ const EditMember = ({ isAdmin }) => {
     const memberData = { name, gymType, price, payingTime };
 
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/member/${id}`, memberData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+        const token = localStorage.getItem('token');
+        await axios.put(`http://localhost:5000/api/member/${id}`, memberData, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
 
-     
-      if (isAdmin) {
-        navigate('/');  
-      } else {
-        navigate('/member/homeMember'); 
-      }
+        // Calculate days since paying time
+        const daysSincePayingTime = calculateDaysSincePayingTime(payingTime);
+        if (isAdmin && daysSincePayingTime > 30) {
+            alert('Este membro é elegível para o preço promocional!');
+        }
+
+        if (isAdmin) {
+            navigate('/');  
+        } else {
+            navigate('/member/homeMember'); 
+        }
     } catch (error) {
-      console.error("Error updating member:", error);
-      alert('Erro ao atualizar membro!');
+        console.error("Error updating member:", error);
+        alert('Erro ao atualizar membro!');
     }
-  };
+};
 
   const handleCancel = () => {
     if (isAdmin) {
