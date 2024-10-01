@@ -21,6 +21,8 @@ const App = () => {
   const [userRole, setUserRole] = useState(''); 
   const [avatar, setAvatar] = useState('/avatar.png'); 
 
+
+  
   const handleLogout = () => {
     console.log('Logging out...');
     localStorage.removeItem('token'); 

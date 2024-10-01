@@ -55,18 +55,21 @@ const EditMember = ({ isAdmin }) => {
         const startTime = new Date(payingTime);
         const timeDifference = Math.abs(currentTime - startTime);
         const daysSincePayingTime = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-
-        
+  
         setPrice(daysSincePayingTime > 30 ? selectedGymType.promotionalPrice : selectedGymType.normalPrice);
-
-       
-        if (isAdmin && daysSincePayingTime > 30 && !alertShown) {
-          alert('Este membro é elegível para o preço promocional!');
-          setAlertShown(true); // prevenir repetição do alerta
+  
+        if (isAdmin && daysSincePayingTime > 30) {
+          if (!alertShown) { 
+            alert('Este membro é elegível para o preço promocional!');
+            setAlertShown(true); 
+          }
+        } else {
+          setAlertShown(false); 
         }
       }
     }
   }, [gymType, payingTime, gymTypes, isAdmin, alertShown]);
+  
 
   const handleGymTypeChange = (selectedGymType) => {
     setGymType(selectedGymType);

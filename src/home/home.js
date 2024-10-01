@@ -32,7 +32,7 @@ const Home = ({ loggedIn }) => {
       await axios.delete(`http://localhost:5000/api/member/${id}`);
       setMembers(members.filter(member => member._id !== id));
     } catch (error) {
-      console.error("Error deleting member:", error);
+      console.error("Error deletando membro:", error);
     }
   };
 
@@ -70,7 +70,7 @@ const Home = ({ loggedIn }) => {
                 <b>Número:</b> {member.number} <br/>
                 <br/>
                 <b>Modalidade:</b> {member.gymType}<br/>
-                <b>Tempo de Academia:</b> {member.gymTime} Dias {/* Display gym time */}
+                <b>Tempo de Academia:</b> {member.gymTime} Dias 
                     </div>
                   </div>
                   <div className="separador">

@@ -35,8 +35,8 @@ const Register = () => {
 
      
       setTimeout(() => {
-        navigate('/login');
-      }, 10000);
+        navigate('/editUsers');
+      }, 1000);
     } catch (error) {
      
       const errorMessage = error.response?.data?.error || 'Erro ao registrar usuário. Verifique seus dados.';
