@@ -56,7 +56,7 @@ const EditMember = ({ isAdmin }) => {
         const timeDifference = Math.abs(currentTime - startTime);
         const daysSincePayingTime = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-        console.log("Days since paying time:", daysSincePayingTime);
+        
         setPrice(daysSincePayingTime > 30 ? selectedGymType.promotionalPrice : selectedGymType.normalPrice);
 
        
