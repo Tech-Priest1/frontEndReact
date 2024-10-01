@@ -1,8 +1,9 @@
 
 .modalityContainer {
-  max-height: 1000px; 
+  margin-top: 100px;
+  max-height: 100000px; 
   overflow-y: auto;
-  border: 1px solid rgb(0, 0, 0);
+  border: 3px solid rgb(0, 0, 0);
   padding: 20px;
   margin-right: auto; 
   margin-left: auto; 
@@ -11,6 +12,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  border-radius: 10px;
 }
 
 .modalityTitulo {
@@ -36,7 +38,8 @@
 .modalityText {
   flex: 1; 
   margin-right: 20px; 
-  padding: 0px;
+  padding: 10px 20px; 
+  padding-right: 20px;
 }
 
 
@@ -61,7 +64,7 @@
   margin-bottom: 10px;
   font-size: large;
   border-radius: 8px;
-  border: 1px solid rgb(0, 0, 0);
+  border: 1px solid rgb(3, 3, 3);
   box-sizing: border-box;
 }
 
@@ -69,7 +72,11 @@
   display: flex;
   justify-content: space-between;
   padding: 0 20px; 
+<<<<<<< Updated upstream
   padding-right: 400px;
+=======
+  padding-right: 20px;
+>>>>>>> Stashed changes
   
 }
 

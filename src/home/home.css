@@ -17,13 +17,14 @@
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
-    color: white;
+    background-color: #ce0000;
+    color: rgb(2, 2, 2);
     cursor: pointer;
   }
   
   .inputButton:hover {
-    background-color: #0056b3;
+    background-color: lightblue;
+    color: rgb(0, 0, 0);
   }
   
   .memberContainer {
@@ -31,6 +32,7 @@
   }
   
   .memberTitulo {
+<<<<<<< Updated upstream
     position: -webkit-sticky; 
     position: sticky;
     top: 0;
@@ -40,6 +42,12 @@
     border-bottom: 1px solid #ccc;
     font-size: 24px;
     margin-bottom: 20px;
+=======
+    font-size: 22px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+>>>>>>> Stashed changes
   }
   
   .memberList {
