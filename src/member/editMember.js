@@ -19,7 +19,7 @@ const EditMember = ({ isAdmin }) => {
       alert('Token inválido!');
       navigate('/');
     }
-    
+
     const fetchMember = async () => {
       try {
         const memberResponse = await axios.get(`http://localhost:5000/api/member/${id}`);
@@ -47,6 +47,7 @@ const EditMember = ({ isAdmin }) => {
     fetchMember();
   }, [id, navigate]);
 
+  
   useEffect(() => {
     if (gymType && payingTime) {
       const selectedGymType = gymTypes.find(type => type.name === gymType);
@@ -55,21 +56,17 @@ const EditMember = ({ isAdmin }) => {
         const startTime = new Date(payingTime);
         const timeDifference = Math.abs(currentTime - startTime);
         const daysSincePayingTime = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  
-        setPrice(daysSincePayingTime > 30 ? selectedGymType.promotionalPrice : selectedGymType.normalPrice);
-  
-        if (isAdmin && daysSincePayingTime > 30) {
-          if (!alertShown) { 
-            alert('Este membro é elegível para o preço promocional!');
-            setAlertShown(true); 
-          }
-        } else {
-          setAlertShown(false); 
+
+        const newPrice = daysSincePayingTime > 30 ? selectedGymType.promotionalPrice : selectedGymType.normalPrice;
+        setPrice(newPrice);
+
+        if (isAdmin && daysSincePayingTime > 30 && !alertShown) {
+          alert('Este membro é elegível para o preço promocional!');
+          setAlertShown(true);
         }
       }
     }
   }, [gymType, payingTime, gymTypes, isAdmin, alertShown]);
-  
 
   const handleGymTypeChange = (selectedGymType) => {
     setGymType(selectedGymType);
@@ -77,23 +74,23 @@ const EditMember = ({ isAdmin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const memberData = { name, gymType, price, payingTime };
 
     try {
-        const token = localStorage.getItem('token');
-        await axios.put(`http://localhost:5000/api/member/${id}`, memberData, {
-            headers: { Authorization: `Bearer ${token}` },
-        });
+      const token = localStorage.getItem('token');
+      await axios.put(`http://localhost:5000/api/member/${id}`, memberData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-        if (isAdmin) {
-            navigate('/');  
-        } else {
-            navigate('/member/homeMember'); 
-        }
+      if (isAdmin) {
+        navigate('/');
+      } else {
+        navigate('/member/homeMember');
+      }
     } catch (error) {
-        console.error("Error updating member:", error);
-        alert('Erro ao atualizar membro!');
+      console.error("Error updating member:", error);
+      alert('Erro ao atualizar membro!');
     }
   };
 
