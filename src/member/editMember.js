@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-
 const EditMember = ({ isAdmin }) => {
   const { id } = useParams();
   const [name, setName] = useState('');
@@ -10,6 +9,7 @@ const EditMember = ({ isAdmin }) => {
   const [price, setPrice] = useState('');
   const [gymTypes, setGymTypes] = useState([]);
   const [payingTime, setPayingTime] = useState('');
+  const [alertShown, setAlertShown] = useState(false); 
 
   const navigate = useNavigate();
 
@@ -19,6 +19,7 @@ const EditMember = ({ isAdmin }) => {
       alert('Token inválido!');
       navigate('/');
     }
+    
     const fetchMember = async () => {
       try {
         const memberResponse = await axios.get(`http://localhost:5000/api/member/${id}`);
@@ -47,22 +48,25 @@ const EditMember = ({ isAdmin }) => {
   }, [id, navigate]);
 
   useEffect(() => {
-    if (gymType) {
+    if (gymType && payingTime) {
       const selectedGymType = gymTypes.find(type => type.name === gymType);
       if (selectedGymType) {
-        const daysSincePayingTime = calculateDaysSincePayingTime(payingTime);
+        const currentTime = new Date();
+        const startTime = new Date(payingTime);
+        const timeDifference = Math.abs(currentTime - startTime);
+        const daysSincePayingTime = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+        console.log("Days since paying time:", daysSincePayingTime);
         setPrice(daysSincePayingTime > 30 ? selectedGymType.promotionalPrice : selectedGymType.normalPrice);
+
+       
+        if (isAdmin && daysSincePayingTime > 30 && !alertShown) {
+          alert('Este membro é elegível para o preço promocional!');
+          setAlertShown(true); // prevenir repetição do alerta
+        }
       }
     }
-  }, [gymType, payingTime, gymTypes]);
-
-  const calculateDaysSincePayingTime = (payingTime) => {
-    if (!payingTime) return 0; 
-    const currentTime = new Date();
-    const startTime = new Date(payingTime);
-    const timeDifference = Math.abs(currentTime - startTime);
-    return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  };
+  }, [gymType, payingTime, gymTypes, isAdmin, alertShown]);
 
   const handleGymTypeChange = (selectedGymType) => {
     setGymType(selectedGymType);
@@ -79,12 +83,6 @@ const EditMember = ({ isAdmin }) => {
             headers: { Authorization: `Bearer ${token}` },
         });
 
-        // Calculate days since paying time
-        const daysSincePayingTime = calculateDaysSincePayingTime(payingTime);
-        if (isAdmin && daysSincePayingTime > 30) {
-            alert('Este membro é elegível para o preço promocional!');
-        }
-
         if (isAdmin) {
             navigate('/');  
         } else {
@@ -94,7 +92,7 @@ const EditMember = ({ isAdmin }) => {
         console.error("Error updating member:", error);
         alert('Erro ao atualizar membro!');
     }
-};
+  };
 
   const handleCancel = () => {
     if (isAdmin) {
