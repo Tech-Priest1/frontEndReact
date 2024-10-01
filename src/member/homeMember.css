@@ -30,6 +30,7 @@
 
 .modalityCard {
   border: 1px solid #ccc;
+  background-color: rgb(36, 36, 36);
   padding: 16px;
   margin-bottom: 10px; 
   border-radius: 8px;

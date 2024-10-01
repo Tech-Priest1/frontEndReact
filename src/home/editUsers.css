@@ -1,7 +1,9 @@
 .userContainer {
+  margin-top: 100px;
   max-height: 1000px; 
   overflow-y: auto;
-  border: 1px solid #000000;
+  border: 3px solid #000000;
+  border-radius: 10px;
   padding: 20px;
   margin-right: auto; 
   margin-left: auto; 
@@ -33,8 +35,8 @@
 }
 
 .userItem {
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
+  background-color: rgb(20, 20, 20);
+  border: 3px solid #000000;
   border-radius: 10px;
   padding: 15px;
   margin-bottom: 10px;
@@ -63,9 +65,11 @@
 .fixedBottom {
   position: sticky;
   bottom: 0;
-  background-color: rgb(212, 212, 212);
+  border: 3px solid #000000;
+  background-color: rgb(20, 20, 20);
   padding: 10px;
   z-index: 10;
+  border-radius: 10px;
   box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
 }
 
