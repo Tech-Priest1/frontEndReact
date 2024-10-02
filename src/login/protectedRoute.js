@@ -6,7 +6,7 @@ const ProtectedRoute = ({ loggedIn, isAdmin, children }) => {
   }
   
   if (isAdmin !== undefined && !isAdmin) {
-    return <Navigate to="/member/homeMember" />; // Redirect non-admin users if they try to access admin routes
+    return <Navigate to="/member/homeMember" />; // Redirect para membros
   }
 
   return children;
