@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import './registerMember.css';
 const RegisterMember = () => {
   const [name, setName] = useState('');
   const [cpf, setCpf] = useState('');
