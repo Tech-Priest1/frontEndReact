@@ -5,7 +5,7 @@ const multer = require('multer');
 const memberController = require("../controllers/memberController");
 const authenticate = require('../middleware/authenticate');
 
-//tentando salvar imagem
+//tentando salvar imagem T-T
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, 'uploads/'); 
