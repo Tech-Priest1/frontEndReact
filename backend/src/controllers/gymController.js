@@ -12,7 +12,7 @@ exports.createGymType = async (req, res) => {
         }
 
         // debug
-        console.log("Creating gym type with data:", req.body);
+        console.log("Criando modalidade:", req.body);
 
        
         const newGymType = new Gym({ 
