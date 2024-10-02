@@ -111,7 +111,7 @@ exports.getAllAdmins = async (req, res) => {
         const admins = await Admins.find();
         res.status(200).json(admins);
     } catch (error) {
-        console.error('Error fetching admins:', error);
+        console.error('Erro pegando admins:', error);
         res.status(500).json({ message: error.message });
     }
 };

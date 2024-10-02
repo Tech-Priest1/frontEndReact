@@ -132,12 +132,12 @@ exports.getMemberById = async (req, res) => {
   try {
     const member = await Members.findById(req.params.id);
     if (!member) {
-      return res.status(404).json({ message: "Member not found" });
+      return res.status(404).json({ message: "Member não encontrado" });
     }
     res.status(200).json(member);
   } catch (error) {
-    console.error("Error fetching member:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Erro pegando membro:", error);
+    res.status(500).json({ message: "Erro de servidor" });
   }
 };
 
@@ -147,7 +147,7 @@ exports.getAllMembers = async (req, res) => {
         const getMembers = await Members.find();
         res.status(200).json(getMembers);
     } catch (error) {
-        console.error("Error fetching members:", error);
+        console.error("Erro pegando membros:", error);
         res.status(500).json({ error: "Error listando membros." });
     }
 };
@@ -171,6 +171,6 @@ exports.updateAvatar = async (req, res) => {
   
       res.json({ avatar: updatedMember.avatar });
     } catch (error) {
-      res.status(500).json({ message: 'Error updating avatar', error });
+      res.status(500).json({ message: 'Erro ataulizando avatar', error });
     }
   };

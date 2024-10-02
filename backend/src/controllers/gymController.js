@@ -98,7 +98,7 @@ exports.getModalitiesByUserType = async (req, res) => {
     try {
         const member = await Members.findById(req.params.id);
         if (!member) {
-            return res.status(404).json({ message: "Member not found" });
+            return res.status(404).json({ message: "Membro não existe" });
         }
 
         console.log("Fetched member:", member);
@@ -109,7 +109,7 @@ exports.getModalitiesByUserType = async (req, res) => {
         console.log("Gym Entry:", gymEntry);
 
         if (!gymEntry) {
-            return res.status(404).json({ error: "Gym type not found." });
+            return res.status(404).json({ error: "Modalidade não existe." });
         }
 
        
@@ -118,12 +118,12 @@ exports.getModalitiesByUserType = async (req, res) => {
         console.log("Modalities:", modalities);
 
         if (modalities.length === 0) {
-            return res.status(404).json({ error: "No modalities found." });
+            return res.status(404).json({ error: "Modalidade não existe." });
         }
 
         res.status(200).json(modalities);
     } catch (error) {
-        console.error("Error fetching modalities:", error);
-        res.status(500).json({ error: "Error fetching modalities." });
+        console.error("Erro ao pegar modalidade:", error);
+        res.status(500).json({ error: "Erro ao pegar modalidade." });
     }
 };
