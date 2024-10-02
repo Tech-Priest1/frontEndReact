@@ -35,12 +35,19 @@ const EditAdmin = () => {
   };
 
   const handleSaveUser = async () => {
+    // eslint-disable-next-line
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (editedPassword.length < 5) {
       alert('Senha precisa de no mínimo 5 caracteres.');
       return;
     }
     if (editedCpf.length !== 11) {
       alert('CPF precisa conter 11 números.');
+      return;
+    }
+    if (!emailRegex.test(editedEmail)) {
+      alert('Por favor, insira um email válido.');
       return;
     }
 
@@ -54,18 +61,19 @@ const EditAdmin = () => {
 
       try {
         const userId = users[editingUserIndex]._id;
-        const response = await axios.put(`http://localhost:5000/api/admin/${userId}`, updatedUser); 
-    
+        const response = await axios.put(`http://localhost:5000/api/admin/${userId}`, updatedUser);
+
         const updatedUsers = [...users];
-        updatedUsers[editingUserIndex] = response.data; 
+        updatedUsers[editingUserIndex] = response.data;
         setUsers(updatedUsers);
-    
+
         setEditingUserIndex(null);
       } catch (error) {
         alert(error.response?.data?.message || 'Erro ao atualizar usuário.');
       }
     }
-  };
+};
+
 
   const handleDeleteUser = async (index) => {
     const userId = users[index]._id; 

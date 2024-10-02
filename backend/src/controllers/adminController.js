@@ -58,18 +58,25 @@ exports.loginAdmin = async (req, res) => {
 // Atualizar Admin
 exports.updateAdmin = async (req, res) => {
     const { id } = req.params;
-    const { name, password, cpf } = req.body;
+    const { name, email, password, cpf } = req.body; 
 
-    if (!name && !password && !cpf) {
+    
+    if (!name && !email && !password && !cpf) {
         return res.status(400).json({ error: "Nenhuma atualização fornecida." });
     }
 
     try {
-        const updatedData = { name, cpf };
+        const updatedData = {};
+
+       
+        if (name) updatedData.name = name;
+        if (email) updatedData.email = email; 
+        if (cpf) updatedData.cpf = cpf;
         if (password) {
             updatedData.password = await bcrypt.hash(password, 10);
         }
 
+       
         const updatedAdmin = await Admins.findByIdAndUpdate(id, updatedData, { new: true });
         res.status(200).json(updatedAdmin);
     } catch (error) {
@@ -77,6 +84,7 @@ exports.updateAdmin = async (req, res) => {
         res.status(500).json({ error: "Erro ao atualizar admin." });
     }
 };
+
 
 // Deletar Admin
 exports.deleteAdmin = async (req, res) => {
